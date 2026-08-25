@@ -1,0 +1,54 @@
+name: pages
+
+# rootle.dev — assembled by website/build.py from THIS repo: the
+# landing page from website/, docs pages from doc/*.md, demo GIFs from
+# img/. The app repo (rootledev/rootle) is checked out at code/ for the
+# version stamp and install.sh.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "website/**"
+      - "doc/**"
+      - "img/**"
+      - ".github/workflows/pages.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      # The app repo: version stamp (Cargo.toml) + install.sh. Public,
+      # no auth needed.
+      - uses: actions/checkout@v7
+        with:
+          repository: rootledev/rootle
+          path: code
+
+      - uses: astral-sh/setup-uv@v7
+
+      - name: Build site
+        run: uv run --with markdown python website/build.py
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
