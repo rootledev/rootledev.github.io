@@ -196,10 +196,12 @@ def page(title: str, body: str, active: str, toc: list[tuple[str, str]]) -> str:
 {body}
 </article>
 <footer>
+  <span><span class="blink"></span> © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></span>
   <span>MIT license</span>
+  <a href="https://github.com/rootledev">rootledev</a>
   <a href="{REPO}">source</a>
   <a href="../index.html">home</a>
-  <span style="margin-left:auto">a ratatui TUI · eleven palettes</span>
+  <span style="margin-left:auto"><span class="fversion">v{app_version()}</span> · a ratatui TUI · eleven palettes</span>
 </footer>
 </main>
 </div>
