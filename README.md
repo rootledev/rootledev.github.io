@@ -18,4 +18,5 @@ for the version stamp and `install.sh`; without it the version falls
 back to the latest release tag.
 
 Demo GIFs are re-rendered by the app repo's `demo` workflow, which
-opens a `demo/artifacts` PR here — never hand-edit them.
+commits them straight to `img/` here (idempotent) — never hand-edit
+them.
