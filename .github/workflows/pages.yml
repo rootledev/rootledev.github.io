@@ -6,6 +6,11 @@ name: pages
 # version stamp and install.sh.
 on:
   workflow_dispatch:
+  # The app repo's release/demo workflows ping us to redeploy (version
+  # chip + fresh GIFs). Needs a token with write access on their side
+  # (SITE_REPO_TOKEN there) — dispatches always run.
+  repository_dispatch:
+    types: [rebuild]
   push:
     branches: [main]
     paths:
