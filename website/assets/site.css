@@ -90,6 +90,7 @@ h2.section {
   margin: 0 0 20px;
 }
 h2.section::before { content: "\276F  "; color: var(--blue); font-size: 0.9em; }
+h2.section.center { text-align: center; }
 pre {
   font-family: var(--mono); font-size: 14px; line-height: 1.7;
   background: var(--deep); border: 1px solid var(--border); border-radius: 12px;
