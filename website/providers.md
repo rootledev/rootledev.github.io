@@ -36,6 +36,31 @@ then calls like `repo/tree` and `repo/blob`:
 ← {"jsonrpc":"2.0","id":1,"result":{"entries":[…],"truncated":false,"branch":"main"}}
 ```
 
+## Process lifecycle — what rootle assumes about your adapter
+
+Your process is owned by rootle: it is killed on exit, and if it dies
+mid-session (crash, OOM, network partition) rootle **respawns it with
+bounded backoff and re-runs the handshake** — an unbounded number of
+times per session. That self-healing works for you only if the adapter
+is built for it:
+
+- **Startup must be cheap and idempotent.** `initialize` runs once per
+  generation; a new generation appears after every death.
+- **State belongs on disk, not in memory.** Every respawn starts from
+  scratch — cache by the protocol's content ids (they're immutable and
+  content-keyed) under `~/.cache/rootle/providers/<name>/`.
+- **Fetch credentials lazily** (first use, not at spawn) and cache them
+  outside the process. Re-running an auth handshake on every respawn
+  turns a network blip into a credential problem.
+- Requests may be in flight **concurrently**, and replies may arrive
+  out of order — ids route them. Each call has a read deadline
+  (`timeout_ms`); during a respawn, a call may additionally wait one
+  backoff interval plus a handshake round trip.
+
+The [full spec](https://github.com/rootledev/rootle/blob/main/doc/provider-protocol.md)
+carries the normative wording, error kinds, and the advisory-cancel
+notification.
+
 ## Building one
 
 - **Full wire spec** — every method, error kinds, cancellation:
