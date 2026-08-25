@@ -6,6 +6,16 @@ as a child process speaking NDJSON-RPC over stdio** — the same model as
 LSP. Your adapter can be any language; four methods make a minimal
 useful provider.
 
+**Available now:**
+
+- **github** — built-in, nothing to install
+- **gitlab** — [`rootle-gitlab`](https://github.com/rootledev/rootle-gitlab),
+  one Rust binary: `cargo install rootle-gitlab`, set `GITLAB_TOKEN`,
+  point rootle at it. Nested groups, code search with real line numbers,
+  advisory cache budget. The reference out-of-tree provider.
+
+**Planned:** bitbucket (same protocol, same binary shape).
+
 ![how rootle talks to backends: one seam, github in-tree, anything else as an NDJSON-RPC stdio child](architecture.svg)
 
 ## Point rootle at your backend
