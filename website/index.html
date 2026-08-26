@@ -36,19 +36,14 @@
     <span class="chip">MIT</span>
     <span class="chip status">alpha</span>
   </div>
-  <div class="installer">
-    <div class="methods">
-      <button class="method" data-install="curl" aria-pressed="true">curl</button>
-      <button class="method" data-install="brew" aria-pressed="false">brew</button>
-      <button class="method" data-install="cargo" aria-pressed="false">cargo</button>
-      <button class="method" data-install="mise" aria-pressed="false">mise</button>
-    </div>
-    <div class="install">
-      <pre><span class="p">$</span> <span data-install-cmd>curl -fsSL https://rootle.dev/install.sh | sh</span></pre>
-      <button class="copy" data-install-copy data-copy="curl -fsSL https://rootle.dev/install.sh | sh" data-copy-label>copy</button>
-    </div>
-    <p class="alt" data-install-note>prebuilt binary — linux + macOS · x86_64 + arm64 · <a href="https://github.com/rootledev/rootle/releases">tarballs ↗</a></p>
+  <div class="installbox">
+    <span class="tab-bar">
+      <button data-install="curl" class="active" aria-pressed="true">curl</button><button data-install="brew" aria-pressed="false">brew</button><button data-install="cargo" aria-pressed="false">cargo</button><button data-install="mise" aria-pressed="false">mise</button>
+    </span>
+    <span class="ib-cmd"><span class="p">$</span> <span data-install-cmd>curl -fsSL https://rootle.dev/install.sh | sh</span></span>
+    <button class="copy" data-install-copy data-copy="curl -fsSL https://rootle.dev/install.sh | sh" data-copy-label>copy</button>
   </div>
+  <p class="alt" data-install-note>prebuilt binary — linux + macOS · x86_64 + arm64 · <a href="https://github.com/rootledev/rootle/releases">tarballs ↗</a></p>
   <div class="cta">
     <a class="primary" href="https://github.com/rootledev/rootle">GitHub ↗</a>
   </div>

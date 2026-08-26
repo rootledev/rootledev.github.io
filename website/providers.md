@@ -44,7 +44,12 @@ then calls like `repo/tree` and `repo/blob`:
 ```
 → {"jsonrpc":"2.0","id":1,"method":"repo/tree","params":{"repo":"local/alpha"}}
 ← {"jsonrpc":"2.0","id":1,"result":{"entries":[…],"truncated":false,"branch":"main"}}
-```
+
+`search/code` streams (v1.3): rootle sends `"partial": true` and your
+adapter may emit `$/partial` notifications carrying batches of items —
+results render in the TUI as they arrive. The final reply is then
+metadata-only (`items: []` + `truncated`). The reference adapter
+streams per repo; the deadline is per-inactivity while you stream.
 
 ## Process lifecycle — what rootle assumes about your adapter
 
