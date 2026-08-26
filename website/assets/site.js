@@ -51,7 +51,7 @@
   var INSTALLS = {
     curl: {
       cmd: "curl -fsSL https://rootle.dev/install.sh | sh",
-      note: "prebuilt binary \u2014 linux + macOS \u00b7 x86_64 + arm64 \u00b7 " + RELEASES,
+      note: "prebuilt binary \u00b7 x86_64 + arm64 \u00b7 " + RELEASES,
     },
     brew: IS_MAC
       ? {
