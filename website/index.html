@@ -36,13 +36,19 @@
     <span class="chip">MIT</span>
     <span class="chip status">alpha</span>
   </div>
-  <div class="install">
-    <pre><span class="p">$</span> curl -fsSL https://rootle.dev/install.sh | sh</pre>
-    <button class="copy" data-copy="curl -fsSL https://rootle.dev/install.sh | sh">copy</button>
+  <div class="installer">
+    <div class="methods">
+      <button class="method" data-install="curl" aria-pressed="true">curl</button>
+      <button class="method" data-install="brew" aria-pressed="false">brew</button>
+      <button class="method" data-install="cargo" aria-pressed="false">cargo</button>
+      <button class="method" data-install="mise" aria-pressed="false">mise</button>
+    </div>
+    <div class="install">
+      <pre><span class="p">$</span> <span data-install-cmd>curl -fsSL https://rootle.dev/install.sh | sh</span></pre>
+      <button class="copy" data-install-copy data-copy="curl -fsSL https://rootle.dev/install.sh | sh" data-copy-label>copy</button>
+    </div>
+    <p class="alt" data-install-note>prebuilt binary — linux + macOS · x86_64 + arm64 · <a href="https://github.com/rootledev/rootle/releases">tarballs ↗</a></p>
   </div>
-  <p class="alt">also: <code>brew install --cask rootledev/tap/rootle</code> ·
-  <code>cargo install rootle</code> ·
-      <a href="https://github.com/rootledev/rootle/releases">release binaries</a></p>
   <div class="cta">
     <a class="primary" href="https://github.com/rootledev/rootle">GitHub ↗</a>
   </div>
@@ -184,53 +190,6 @@
     </a>
   </div>
 </section>
-
-<section id="install">
-  <h2 class="section center">install</h2>
-  <div class="install-grid">
-    <div class="install-block">
-      <span class="install-label">the one-liner</span>
-      <div class="install">
-        <pre><span class="p">$</span> curl -fsSL https://rootle.dev/install.sh | sh</pre>
-        <button class="copy" data-copy="curl -fsSL https://rootle.dev/install.sh | sh">copy</button>
-      </div>
-    </div>
-    <div class="install-block">
-      <span class="install-label">homebrew (macOS — prebuilt)</span>
-      <div class="install">
-        <pre><span class="p">$</span> brew install --cask rootledev/tap/rootle</pre>
-        <button class="copy" data-copy="brew install --cask rootledev/tap/rootle">copy</button>
-      </div>
-    </div>
-    <div class="install-block">
-      <span class="install-label">homebrew (linux — from source)</span>
-      <div class="install">
-        <pre><span class="p">$</span> brew install rootledev/tap/rootle</pre>
-        <button class="copy" data-copy="brew install rootledev/tap/rootle">copy</button>
-      </div>
-    </div>
-    <div class="install-block">
-      <span class="install-label">cargo</span>
-      <div class="install">
-        <pre><span class="p">$</span> cargo install rootle</pre>
-        <button class="copy" data-copy="cargo install rootle">copy</button>
-      </div>
-    </div>
-    <div class="install-block">
-      <span class="install-label">mise</span>
-      <div class="install">
-        <pre><span class="p">$</span> mise use cargo:rootle</pre>
-        <button class="copy" data-copy="mise use cargo:rootle">copy</button>
-      </div>
-    </div>
-    <div class="install-block">
-      <span class="install-label">tarballs</span>
-      <a class="install as-link" href="https://github.com/rootledev/rootle/releases">
-        <pre><span class="p">↗</span> github releases — linux + macOS · x86_64 + arm</pre>
-      </a>
-    </div>
-  </div>
-  </section>
 
 <footer>
   <span><span class="blink"></span> © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></span>
