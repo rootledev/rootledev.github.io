@@ -307,6 +307,7 @@ p.alt code { border: none; padding: 0 2px; }
 }
 .installbox .copy:hover { color: var(--text); border-color: var(--border-strong); }
 .installbox .copy.ok { color: var(--green); }
+.installbox .ib-os { font-size: 11px; color: var(--faint); white-space: nowrap; margin-left: auto; }
 .alt .inline-copy { background: none; border: none; padding: 0; cursor: pointer; font: inherit; color: inherit; }
 .alt .inline-copy code { color: var(--dim); }
 .alt .inline-copy:hover code { color: var(--blue); text-decoration: underline; }
