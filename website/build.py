@@ -66,6 +66,8 @@ def asset_version() -> str:
 
 # Docs pages: url-slug -> (source file, nav label).
 PAGES: dict[str, tuple[str, str]] = {
+    "github": ("doc/github.md", "github"),
+    "gitlab": ("doc/gitlab.md", "gitlab"),
     "settings": ("doc/settings.md", "settings"),
     "themes": ("doc/themes.md", "themes"),
     # Trimmed site version; the app repo carries the full wire spec.
