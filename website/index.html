@@ -52,6 +52,12 @@
   <div class="cta">
     <a class="primary" href="https://github.com/rootledev/rootle">GitHub ↗</a>
   </div>
+  <div class="steps">
+    <div class="step"><b>[01]</b><h3>install</h3><p>one static binary — the box above covers curl, brew, cargo, mise.</p></div>
+    <div class="step"><b>[02]</b><h3>auth</h3><p><code>gh auth login</code> covers GitHub; everything else is one env var — tokens stay in your environment, rootle never sees provider auth.</p></div>
+    <div class="step"><b>[03]</b><h3>run</h3><p><code>rootle</code> opens repo search; <code>rootle owner/repo</code> jumps straight in; <code>@branch</code> pins a revision.</p></div>
+    <div class="step"><b>[04]</b><h3>beyond github</h3><p><code>rootle provider install gitlab</code> — checksum-verified, 30 seconds. have an internal forge? <a href="./docs/providers/your-forge.html">four methods add it</a>.</p></div>
+  </div>
 </section>
 
 <section class="demo">

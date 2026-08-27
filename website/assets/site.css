@@ -418,6 +418,33 @@ table.compare .part { color: var(--yellow); font-size: 13px; }
 }
 .kg-col .desc { color: var(--dim); font-size: 13px; }
 
+/* ---- get-started steps (gripsack steps pattern) ---- */
+.steps {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; background: var(--card);
+  margin: 26px auto 0; max-width: 1000px; text-align: left;
+}
+.step {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 16px 18px 20px;
+  border-right: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
+}
+.step:last-child { border-right: none; }
+.step b { font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--faint); }
+.step h3 { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text); margin: 0; }
+.step h3::before { content: "\276F "; color: var(--blue); }
+.step p { margin: 0; color: var(--dim); font-size: 13px; line-height: 1.5; }
+.step p code { border: none; padding: 0 2px; }
+.step p a { color: var(--dim); }
+.step p a:hover { color: var(--blue); }
+@media (max-width: 900px) {
+  .steps { grid-template-columns: 1fr 1fr; }
+  .step:nth-child(2n) { border-right: none; }
+  .step { border-bottom: 1px solid color-mix(in srgb, var(--border) 55%, transparent); }
+  .step:nth-last-child(-n+2) { border-bottom: none; }
+}
+
 /* ---- backends band (tuicr forge-band pattern) ---- */
 .forge-band {
   margin: 22px auto 0;
