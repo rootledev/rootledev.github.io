@@ -440,6 +440,21 @@ table.compare .part { color: var(--yellow); font-size: 13px; }
 .forge svg { width: 15px; height: 15px; fill: currentColor; flex: none; }
 .forge .cli { color: var(--faint); font-size: 11px; }
 .forge:hover .cli { color: var(--blue); }
+/* Cards with an out-link split: the body stays the docs page, the
+   45° arrow is the standard external affordance to the source repo
+   (nested anchors are invalid, so the card is a wrapper). */
+.forge-main {
+  display: inline-flex; align-items: center; gap: 7px;
+  color: inherit; text-decoration: none;
+}
+.forge-main:hover { color: var(--blue); }
+.forge .repo-link {
+  color: var(--faint); text-decoration: none; font-size: 12px;
+  margin-left: 3px; padding-left: 8px;
+  border-left: 1px dashed var(--border);
+  transition: color 0.15s, transform 0.15s;
+}
+.forge .repo-link:hover { color: var(--blue); transform: translate(1px, -1px); }
 .forge.planned { border-style: dashed; opacity: 0.75; }
 .forge.planned:hover { opacity: 1; }
 
