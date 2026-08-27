@@ -294,6 +294,17 @@ def build_docs() -> None:
         )
         print(f"built docs/{slug}.html from {src} ({len(toc)} toc entries)")
 
+    # Redirect stubs keep the pre-section flat URLs alive
+    # (docs/github.html → docs/providers/github.html, …).
+    for name in ("github", "gitlab", "bitbucket"):
+        stub = OUT / "docs" / f"{name}.html"
+        stub.write_text(
+            '<!doctype html>\n<meta charset="utf-8">\n'
+            f"<title>rootle — {name}</title>\n"
+            f'<meta http-equiv="refresh" content="0;url=./providers/{name}.html">\n'
+            f'<a href="./providers/{name}.html">moved</a>\n'
+        )
+
 
 def assemble() -> None:
     if OUT.exists():
