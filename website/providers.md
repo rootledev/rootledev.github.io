@@ -14,7 +14,12 @@ useful provider.
   point rootle at it. Nested groups, code search with real line numbers,
   advisory cache budget. The reference out-of-tree provider.
 
-**Planned:** bitbucket (same protocol, same binary shape).
+- **bitbucket** — [`rootle-bitbucket`](https://github.com/rootledev/rootle-bitbucket),
+  same shape: `cargo install rootle-bitbucket`, set
+  `BITBUCKET_USERNAME` + `BITBUCKET_TOKEN` (app password) or a lone
+  bearer token. First consumer of the protocol's `file_search` split —
+  Bitbucket Cloud has no code-search API, so file find walks the
+  commit-pinned tree while grep answers honestly.
 
 ![how rootle talks to backends: one seam, github in-tree, anything else as an NDJSON-RPC stdio child](architecture.svg)
 
