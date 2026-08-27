@@ -9,17 +9,24 @@ useful provider.
 **Available now:**
 
 - **github** — built-in, nothing to install
-- **gitlab** — [`rootle-gitlab`](https://github.com/rootledev/rootle-gitlab),
-  one Rust binary: `cargo install rootle-gitlab`, set `GITLAB_TOKEN`,
-  point rootle at it. Nested groups, code search with real line numbers,
+- **gitlab** — [`rootle-gitlab`](https://github.com/rootledev/rootle-gitlab):
+  `rootle provider install gitlab`, set `GITLAB_TOKEN`, done —
+  30 seconds. Nested groups, code search with real line numbers,
   advisory cache budget. The reference out-of-tree provider.
 
-- **bitbucket** — [`rootle-bitbucket`](https://github.com/rootledev/rootle-bitbucket),
-  same shape: `cargo install rootle-bitbucket`, set
-  `BITBUCKET_USERNAME` + `BITBUCKET_TOKEN` (app password) or a lone
-  bearer token. First consumer of the protocol's `file_search` split —
-  Bitbucket Cloud has no code-search API, so file find walks the
-  commit-pinned tree while grep answers honestly.
+- **bitbucket** — [`rootle-bitbucket`](https://github.com/rootledev/rootle-bitbucket):
+  `rootle provider install bitbucket`, set `BITBUCKET_USERNAME` +
+  `BITBUCKET_TOKEN` (app password) or a lone bearer token. First
+  consumer of the protocol's `file_search` split — Bitbucket Cloud has
+  no code-search API, so file find walks the commit-pinned tree while
+  grep answers honestly.
+
+The manager downloads the checksum-verified release binary for your
+platform (the mandatory `.sha256` sidecar — a mismatch aborts the
+install), tracks updates with `rootle provider update` / `upgrade`, and
+`provider use` writes the config for you. Manual routes stay supported:
+`cargo install`, prebuilt tarballs, plain-HTTP artifact URLs, and
+`--path` for config-managed deployments.
 
 ![how rootle talks to backends: one seam, github in-tree, anything else as an NDJSON-RPC stdio child](architecture.svg)
 
@@ -87,9 +94,11 @@ notification.
   [doc/provider-protocol.md](https://github.com/rootledev/rootle/blob/main/doc/provider-protocol.md)
 - **Reference adapter** (documentation-by-example):
   [examples/providers/fs_provider.py](https://github.com/rootledev/rootle/blob/main/examples/providers/fs_provider.py)
-- **Scaffolding skill** — capability questionnaire, adapter skeleton,
-  and a conformance test suite that gates integration:
+- **Scaffolding skill** — capability questionnaire + adapter skeleton:
   [skills/rootle-provider](https://github.com/rootledev/rootle/tree/main/skills/rootle-provider)
+- **Conformance gate** — the canonical numbered suite every adapter
+  runs in CI (rootle, gitlab, and bitbucket all do):
+  [forge-conformance](https://github.com/rootledev/forge-conformance)
 
 The e2e suite drives the full TUI through this protocol against the
 reference adapter — offline proof of the whole path.
