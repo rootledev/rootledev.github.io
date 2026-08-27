@@ -47,7 +47,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
 
       - name: Build site
-        run: uv run --with markdown python website/build.py
+        run: uv run --with markdown --with pymdown-extensions --with pygments python website/build.py
 
       - uses: actions/configure-pages@v5
 

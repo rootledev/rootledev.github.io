@@ -72,8 +72,8 @@ PAGES: dict[str, tuple[str, str]] = {
     "providers/github": ("doc/providers/github.md", "github"),
     "providers/gitlab": ("doc/providers/gitlab.md", "gitlab"),
     "providers/bitbucket": ("doc/providers/bitbucket.md", "bitbucket"),
+    "providers/your-forge": ("doc/providers/your-forge.md", "your forge"),
     "settings": ("doc/settings.md", "settings"),
-    "themes": ("doc/themes.md", "themes"),
     # Trimmed site version; the app repo carries the full wire spec.
     "provider-protocol": ("website/providers.md", "protocol"),
 }
@@ -86,9 +86,9 @@ RAIL: list[tuple[str, str, str]] = [
     ("docs/providers/github.html", "github", "sub"),
     ("docs/providers/gitlab.html", "gitlab", "sub"),
     ("docs/providers/bitbucket.html", "bitbucket", "sub"),
+    ("docs/providers/your-forge.html", "your forge", "sub"),
     ("docs/provider-protocol.html", "protocol", ""),
     ("docs/settings.html", "settings", ""),
-    ("docs/themes.html", "themes", ""),
 ]
 
 # Links inside the site docs that point at files in the APP repo we
@@ -261,7 +261,17 @@ def build_docs() -> None:
         prefix = "../" if "/" not in slug else "../../"
         text = (ROOT / src).read_text()
         body = markdown.markdown(
-            text, extensions=["fenced_code", "tables", "toc", "sane_lists"]
+            text,
+            extensions=[
+                "pymdownx.superfences",
+                "tables",
+                "toc",
+                "sane_lists",
+                "pymdownx.highlight",
+            ],
+            extension_configs={
+                "pymdownx.highlight": {"linenums": False, "guess_lang": True},
+            },
         )
         body = rewrite(body, slugs, prefix)
         # Inline + theme doc-local SVG diagrams (they live behind <img>
