@@ -10,17 +10,10 @@ The provider manager (the bare name resolves by convention):
 
 ```sh
 rootle provider install bitbucket
-rootle provider use bitbucket
 ```
 
-Or from source / crates.io:
-
-```sh
-cargo install rootle-bitbucket
-```
-
-Or grab a [prebuilt binary](https://github.com/rootledev/rootle-bitbucket/releases)
-(linux + macOS, x86_64 + aarch64) and put it on your PATH.
+`install` fetches the checksum-verified binary for your platform;
+`use` writes the config (below).
 
 ## Authentication
 
@@ -43,20 +36,19 @@ export BITBUCKET_TOKEN=your-api-token
 # Repositories — Read
 ```
 
-Then point rootle at it — `~/.config/rootle/config.toml`:
+Then point rootle at it:
 
-```toml
-[provider]
-kind = "stdio"
-command = ["rootle-bitbucket"]
+```sh
+rootle provider use bitbucket
+rootle               # browse, preview, file find, clone Bitbucket
 ```
 
 A token scoped to repositories only (no Account — Read) can't discover
 workspaces — CHANGE-2770 removed the old cross-workspace listings and
 the replacement wants the account scope. Name your workspaces instead:
 
-```toml
-command = ["rootle-bitbucket", "--workspace", "myteam"]
+```sh
+rootle provider use bitbucket -- --workspace myteam
 ```
 
 (`BITBUCKET_WORKSPACES=a,b` works too.)
@@ -97,6 +89,23 @@ file" case; open the file and use find-in-file (`␣ /`) for content.
   git credential store; rootle hands git the URL, not the credential.
 - Rate limits map to the protocol's taxonomy — a 429 shows the
   advertised backoff on the status line.
+
+## Advanced: manual setup
+
+Everything the manager does, by hand: `cargo install rootle-bitbucket`
+(or a [prebuilt binary](https://github.com/rootledev/rootle-bitbucket/releases),
+linux + macOS, x86_64 + aarch64), then `~/.config/rootle/config.toml`:
+
+```toml
+[provider]
+kind = "stdio"
+command = ["rootle-bitbucket"]
+```
+
+Plain-HTTP artifact hosts work too — `rootle provider install
+https://…/rootle-bitbucket-0.1.0-x86_64-unknown-linux-musl.tar.gz` —
+install-and-pin (not tracked by `update`/`upgrade`), checksum sidecar
+mandatory.
 
 ## The provider itself
 
