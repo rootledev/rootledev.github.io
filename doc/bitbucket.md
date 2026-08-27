@@ -22,17 +22,22 @@ cd rootle-bitbucket && cargo install --path .
 ## Authentication
 
 The provider reads credentials lazily, on first API call (a respawned
-provider never re-authenticates at startup). Two shapes:
+provider never re-authenticates at startup). Two shapes — **pick one,
+they don't mix**:
 
 ```sh
-# App password (recommended): create at
+# App password: create at
 # https://bitbucket.org/account/settings/app-passwords/
 # scopes: Account — Read; Repositories — Read
 export BITBUCKET_USERNAME=you
 export BITBUCKET_TOKEN=your-app-password
 
-# …or a lone API token rides as a Bearer header:
+# …or an Atlassian API token (id.atlassian.com) rides alone as a
+# Bearer header — pairing it with a username sends Basic, which
+# Bitbucket rejects for API tokens:
 export BITBUCKET_TOKEN=your-api-token
+# API token scopes: Account — Read (workspace discovery),
+# Repositories — Read
 ```
 
 Then point rootle at it — `~/.config/rootle/config.toml`:
@@ -43,11 +48,22 @@ kind = "stdio"
 command = ["rootle-bitbucket"]
 ```
 
+A token scoped to repositories only (no Account — Read) can't discover
+workspaces — CHANGE-2770 removed the old cross-workspace listings and
+the replacement wants the account scope. Name your workspaces instead:
+
+```toml
+command = ["rootle-bitbucket", "--workspace", "myteam"]
+```
+
+(`BITBUCKET_WORKSPACES=a,b` works too.)
+
 ## What works
 
 - **Browse** — workspaces → repos → full recursive trees. Bitbucket
-  lists one directory per API call; the provider walks (bounded,
-  cached per commit) so the miller columns behave like every other
+  lists one directory per API call; the provider walks eight
+  directories in flight (a real repo lands in seconds), bounded and
+  cached per commit, so the miller columns behave like every other
   forge.
 - **Find** (`␣ f`) — filename search over the walked tree, served as
   path-only hits. Repo- or workspace-scoped `path:` queries work over
