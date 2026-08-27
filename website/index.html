@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>rootle</title>
-<meta name="description" content="rootle — a modal terminal UI for browsing remote source-control systems. GitHub in-tree, anything else via stdio providers.">
+<title>rootle — terminal source browser</title>
+<meta name="description" content="rootle — terminal source browser: jump across repos, grep code, inspect files, and open what you need across GitHub, GitLab, Bitbucket, and company forges — without cloning.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="./assets/site.css">
 <script src="./assets/site.js" defer></script>
@@ -28,10 +28,13 @@
 <section class="hero">
   <div class="logo" role="img" aria-label="rootle — terminal card with miller columns and the rootle mole"><!--LOGO--></div>
   <p class="tagline">browse remote source-control systems from your terminal. clone nothing.</p>
+  <p class="sub">Jump across repos, search code, inspect files, and open exactly what you need —
+  without cloning a dozen repositories or leaving your terminal.</p>
+  <p class="forges">github · gitlab · bitbucket · your company forge</p>
   <div class="chips">
     <span class="chip version">v<!--VERSION--></span>
     <span class="chip">github built-in</span>
-    <span class="chip">gitlab · any forge via stdio</span>
+    <span class="chip">any forge via stdio</span>
     <span class="chip">rust</span>
     <span class="chip">MIT</span>
     <span class="chip status">alpha</span>
@@ -44,14 +47,14 @@
     <button class="copy" data-install-copy data-copy="curl -fsSL https://rootle.dev/install.sh | sh" data-copy-label>copy</button>
     <span class="ib-os">linux · macOS</span>
   </div>
-  <p class="alt" data-install-note>prebuilt binary · x86_64 + arm64 · <a href="https://github.com/rootledev/rootle/releases">tarballs ↗</a></p>
+  <p class="alt" data-install-note>prebuilt binary · x86_64 + arm64 · sha256-verified · <a href="https://github.com/rootledev/rootle/releases">tarballs ↗</a><br>read-only against every forge · tokens stay in your environment · no telemetry</p>
   <div class="cta">
     <a class="primary" href="https://github.com/rootledev/rootle">GitHub ↗</a>
   </div>
 </section>
 
 <section class="demo">
-  <h2 class="section">demo — pick a palette</h2>
+  <h2 class="section">watch the workflow — then pick a palette</h2>
   <div class="palette-bar">
     <button data-set-palette="catppuccin-mocha" class="active"><span class="sw" style="--sw:#89b4fa"></span>catppuccin-mocha</button>
     <button data-set-palette="dracula"><span class="sw" style="--sw:#bd93f9"></span>dracula</button>
@@ -86,7 +89,7 @@
     <div class="feat">
       <div class="num">[02]</div>
       <h3>find &amp; grep</h3>
-      <p>Full-screen, Zed-style results: match chips, folded regions, per-file counts. Scope to a repo or search globally.</p>
+      <p>Full-screen, Zed-style results in decorated per-file boxes: quoted literals, negation and <code>language:</code> qualifiers, streaming facet chips, and <code>enter</code> expands a hit into the whole file at the match line. Scope to a repo or search globally.</p>
       <div class="keys"><span class="kb">␣ f</span><span class="kb">␣ g</span><span class="kb">/</span></div>
     </div>
     <div class="feat">
@@ -116,17 +119,28 @@
   </div>
 </section>
 
-<section id="compare">
-  <h2 class="section">compare</h2>
-  <table class="compare">
-    <tr><th></th><th>rootle</th><th>github.com</th><th>gh cli</th><th>clone + editor</th></tr>
-    <tr><td>browse without cloning</td><td class="yes">✓</td><td class="yes">✓</td><td class="part">api only</td><td class="no">·</td></tr>
-    <tr><td>modal, keyboard-first TUI</td><td class="yes">✓</td><td class="no">·</td><td class="no">·</td><td class="no">·</td></tr>
-    <tr><td>syntax-highlighted preview</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">·</td><td class="yes">✓</td></tr>
-    <tr><td>full-text grep in the terminal</td><td class="yes">✓</td><td class="no">·</td><td class="part">gh search code</td><td class="yes">✓</td></tr>
-    <tr><td>forges beyond GitHub</td><td class="part">stdio providers</td><td class="no">·</td><td class="part">GHES only</td><td class="yes">✓</td></tr>
-    <tr><td>single static binary</td><td class="yes">✓</td><td class="no">n/a</td><td class="yes">✓</td><td class="no">n/a</td></tr>
-  </table>
+<section id="situations">
+  <h2 class="section">when it clicks</h2>
+  <div class="feat-grid">
+    <div class="feat">
+      <div class="num">[01]</div>
+      <h3>"someone sends you a repo you've never seen"</h3>
+      <p>rootle it instead of cloning it. Search, open, browse the tree, read the file, yank the permalink — done before a clone would finish.</p>
+      <div class="keys"><span class="kb">rootle owner/repo</span></div>
+    </div>
+    <div class="feat">
+      <div class="num">[02]</div>
+      <h3>"how do our five services call this API?"</h3>
+      <p>Grep remotely across the org — quoted literals, negation, <code>language:</code> qualifiers, streaming results with facet chips. No checkouts, no local index.</p>
+      <div class="keys"><span class="kb">␣ g</span><span class="kb">language:rust</span></div>
+    </div>
+    <div class="feat">
+      <div class="num">[03]</div>
+      <h3>"we have github + gitlab + an internal forge"</h3>
+      <p>Browse them through one interface. GitHub is built in; gitlab and bitbucket install from the provider manager; anything else is a small stdio adapter away.</p>
+      <div class="keys"><span class="kb">provider install</span></div>
+    </div>
+  </div>
 </section>
 
 <section id="keys">
@@ -175,11 +189,11 @@
     <a class="forge" href="./docs/providers/github.html" title="Built-in — browse, search, grep, clone. Nothing to install."><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
       github <span class="cli">built-in</span>
     </a>
-    <div class="forge"><a class="forge-main" href="./docs/providers/gitlab.html" title="Installable — browse, search, grep, clone. One binary: cargo install rootle-gitlab"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"/></svg>
+    <div class="forge"><a class="forge-main" href="./docs/providers/gitlab.html" title="Installable — browse, search, grep, clone. rootle provider install gitlab"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"/></svg>
       gitlab <span class="cli">rootle-gitlab</span></a>
       <a class="repo-link" href="https://github.com/rootledev/rootle-gitlab" title="source — rootledev/rootle-gitlab" target="_blank" rel="noopener">↗</a>
     </div>
-    <div class="forge"><a class="forge-main" href="./docs/providers/bitbucket.html" title="Installable — browse, preview, file find, clone. One binary: cargo install rootle-bitbucket"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M.778 1.213a.768.768 0 0 0-.768.892l3.263 19.81c.084.5.515.868 1.022.873H19.95a.772.772 0 0 0 .77-.646l3.27-20.03a.768.768 0 0 0-.768-.891zM14.52 15.53H9.52l-1.07-5.66h7.09z"/></svg>
+    <div class="forge"><a class="forge-main" href="./docs/providers/bitbucket.html" title="Installable — browse, preview, file find, clone. rootle provider install bitbucket"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M.778 1.213a.768.768 0 0 0-.768.892l3.263 19.81c.084.5.515.868 1.022.873H19.95a.772.772 0 0 0 .77-.646l3.27-20.03a.768.768 0 0 0-.768-.891zM14.52 15.53H9.52l-1.07-5.66h7.09z"/></svg>
       bitbucket <span class="cli">rootle-bitbucket</span></a>
       <a class="repo-link" href="https://github.com/rootledev/rootle-bitbucket" title="source — rootledev/rootle-bitbucket" target="_blank" rel="noopener">↗</a>
     </div>
