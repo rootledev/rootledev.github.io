@@ -76,6 +76,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "settings": ("doc/settings.md", "settings"),
     # Trimmed site version; the app repo carries the full wire spec.
     "provider-protocol": ("website/providers.md", "protocol"),
+    "roadmap": ("doc/roadmap.md", "roadmap"),
 }
 
 # Rail shape: (href-from-root, label, css class or ""). Sub-links sit
@@ -89,6 +90,7 @@ RAIL: list[tuple[str, str, str]] = [
     ("docs/providers/your-forge.html", "your forge", "sub"),
     ("docs/provider-protocol.html", "protocol", ""),
     ("docs/settings.html", "settings", ""),
+    ("docs/roadmap.html", "roadmap", ""),
 ]
 
 # Links inside the site docs that point at files in the APP repo we
