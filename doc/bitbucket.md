@@ -6,18 +6,21 @@ binary speaking rootle's stdio protocol, talking to Bitbucket's REST
 
 ## Install
 
-From source / crates.io:
+The provider manager (the bare name resolves by convention):
+
+```sh
+rootle provider install bitbucket
+rootle provider use bitbucket
+```
+
+Or from source / crates.io:
 
 ```sh
 cargo install rootle-bitbucket
 ```
 
-Or build it from the repo:
-
-```sh
-git clone https://github.com/rootledev/rootle-bitbucket
-cd rootle-bitbucket && cargo install --path .
-```
+Or grab a [prebuilt binary](https://github.com/rootledev/rootle-bitbucket/releases)
+(linux + macOS, x86_64 + aarch64) and put it on your PATH.
 
 ## Authentication
 
