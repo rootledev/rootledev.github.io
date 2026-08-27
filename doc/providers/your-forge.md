@@ -69,10 +69,13 @@ Four methods make a minimal useful provider: `repo/tree`,
 
 The normative wire format lives in
 [`doc/provider-protocol.md`](https://github.com/rootledev/rootle/blob/main/doc/provider-protocol.md)
-(v1.3). The [scaffolding
+(v1.4). The [scaffolding
 skill](https://github.com/rootledev/rootle/tree/main/skills/rootle-provider)
-walks you through the capability questionnaire and ships a conformance
-suite — it is the same gate rootle-gitlab and rootle-bitbucket pass.
+walks you through the capability questionnaire, and the canonical
+[forge-conformance](https://github.com/rootledev/forge-conformance)
+suite is the integration gate — every protocol gotcha as a numbered,
+citable case (FC-001..080) against a deterministic fixture. It is the
+same gate rootle-gitlab and rootle-bitbucket run in their own CI.
 
 Real out-of-tree providers to read: [rootle-gitlab](https://github.com/rootledev/rootle-gitlab)
 (GitLab REST v4, content-addressed cache, ETag revalidation) and
