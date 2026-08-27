@@ -64,16 +64,32 @@ def asset_version() -> str:
         _ASSET_VERSION = h.hexdigest()[:8]
     return _ASSET_VERSION
 
-# Docs pages: url-slug -> (source file, nav label).
+# Docs pages: url-path (under docs/) -> (source file, nav label).
+# Nested paths create sub-directories — the providers section is one
+# page per forge plus its index (the gripsack fetchers pattern).
 PAGES: dict[str, tuple[str, str]] = {
-    "github": ("doc/github.md", "github"),
-    "gitlab": ("doc/gitlab.md", "gitlab"),
-    "bitbucket": ("doc/bitbucket.md", "bitbucket"),
+    "providers/index": ("doc/providers/index.md", "providers"),
+    "providers/github": ("doc/providers/github.md", "github"),
+    "providers/gitlab": ("doc/providers/gitlab.md", "gitlab"),
+    "providers/bitbucket": ("doc/providers/bitbucket.md", "bitbucket"),
     "settings": ("doc/settings.md", "settings"),
     "themes": ("doc/themes.md", "themes"),
     # Trimmed site version; the app repo carries the full wire spec.
-    "provider-protocol": ("website/providers.md", "providers"),
+    "provider-protocol": ("website/providers.md", "protocol"),
 }
+
+# Rail shape: (href-from-root, label, css class or ""). Sub-links sit
+# under their section's link, indented.
+RAIL: list[tuple[str, str, str]] = [
+    ("index.html", "home", ""),
+    ("docs/providers/", "providers", ""),
+    ("docs/providers/github.html", "github", "sub"),
+    ("docs/providers/gitlab.html", "gitlab", "sub"),
+    ("docs/providers/bitbucket.html", "bitbucket", "sub"),
+    ("docs/provider-protocol.html", "protocol", ""),
+    ("docs/settings.html", "settings", ""),
+    ("docs/themes.html", "themes", ""),
+]
 
 # Links inside the site docs that point at files in the APP repo we
 # do not mirror: send them to the blob/tree on GitHub instead.
@@ -126,9 +142,7 @@ def themed_logo() -> str:
     return themed_svg(ROOT / "doc" / "logo.svg")
 
 
-RAIL_LINKS = [("index.html", "home")] + [
-    (f"docs/{slug}.html", label) for slug, (_, label) in PAGES.items()
-]
+
 
 
 # Palette dots in the docs rail: name + accent color (border_focused),
@@ -148,10 +162,10 @@ PALETTE_DOTS = [
 ]
 
 
-def rail(active: str, toc: list[tuple[str, str]]) -> str:
+def rail(active: str, toc: list[tuple[str, str]], prefix: str = "../") -> str:
     links = "".join(
-        f'    <a{" class=\"active\"" if href == active else ""} href="../{href}">{label}</a>\n'
-        for href, label in RAIL_LINKS
+        f'    <a{" class=\"active\"" if href == active else (" class=\"" + cls + "\"" if cls else "")} href="{prefix}{href}">{label}</a>\n'
+        for href, label, cls in RAIL
     )
     toc_html = "".join(f'    <a href="#{anchor}">{label}</a>\n' for label, anchor in toc)
     toc_block = (
@@ -165,7 +179,7 @@ def rail(active: str, toc: list[tuple[str, str]]) -> str:
         for name, color in PALETTE_DOTS
     )
     return f"""<aside class="rail">
-  <a class="brand" href="../index.html">
+  <a class="brand" href="{prefix}index.html">
     <img src="../assets/icon.svg" alt="rootle icon"><span class="wordmark">rootle</span>
   </a>
   <span class="rail-head">menu</span>
@@ -179,7 +193,7 @@ def rail(active: str, toc: list[tuple[str, str]]) -> str:
 </aside>"""
 
 
-def page(title: str, body: str, active: str, toc: list[tuple[str, str]]) -> str:
+def page(title: str, body: str, active: str, toc: list[tuple[str, str]], prefix: str = "../") -> str:
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -187,13 +201,13 @@ def page(title: str, body: str, active: str, toc: list[tuple[str, str]]) -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="rootle — a modal terminal UI for browsing remote source-control systems.">
-<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../assets/site.css?v={asset_version()}">
-<script src="../assets/site.js?v={asset_version()}" defer></script>
+<link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{prefix}assets/site.css?v={asset_version()}">
+<script src="{prefix}assets/site.js?v={asset_version()}" defer></script>
 </head>
 <body class="docs">
 <div class="shell">
-{rail(active, toc)}
+{rail(active, toc, prefix)}
 <main class="content">
 <article class="md">
 {body}
@@ -203,7 +217,7 @@ def page(title: str, body: str, active: str, toc: list[tuple[str, str]]) -> str:
   <span>MIT license</span>
   <a href="https://github.com/rootledev">rootledev</a>
   <a href="{REPO}">source</a>
-  <a href="../index.html">home</a>
+  <a href="{prefix}index.html">home</a>
   <span style="margin-left:auto"><span class="fversion">v{app_version()}</span> · a ratatui TUI · eleven palettes</span>
 </footer>
 </main>
@@ -223,12 +237,12 @@ def extract_toc(md_body: str) -> list[tuple[str, str]]:
     return toc
 
 
-def rewrite(body: str, slugs: set[str]) -> str:
+def rewrite(body: str, slugs: set[str], prefix: str = "../") -> str:
     """Fix links/images in converted doc HTML for their new home."""
 
     # Doc-local assets (diagrams): architecture.svg -> ../assets/…
     for name in DOC_ASSETS:
-        body = body.replace(f'src="{name}"', f'src="../assets/{name}"')
+        body = body.replace(f'src="{name}"', f'src="{prefix}assets/{name}"')
 
     # Sibling docs that are site pages -> their page.
     for slug in slugs:
@@ -244,11 +258,12 @@ def rewrite(body: str, slugs: set[str]) -> str:
 def build_docs() -> None:
     slugs = set(PAGES)
     for slug, (src, _) in PAGES.items():
+        prefix = "../" if "/" not in slug else "../../"
         text = (ROOT / src).read_text()
         body = markdown.markdown(
             text, extensions=["fenced_code", "tables", "toc", "sane_lists"]
         )
-        body = rewrite(body, slugs)
+        body = rewrite(body, slugs, prefix)
         # Inline + theme doc-local SVG diagrams (they live behind <img>
         # otherwise, which can't inherit the page's palette vars).
         for name in DOC_ASSETS:
@@ -263,7 +278,7 @@ def build_docs() -> None:
                     )
 
                 body = re.sub(
-                    rf'<img [^>]*src="\.\./assets/{re.escape(name)}"[^>]*>',
+                    rf'<img [^>]*src="(?:\.\./)+assets/{re.escape(name)}"[^>]*>',
                     inline_svg,
                     body,
                 )
@@ -271,8 +286,11 @@ def build_docs() -> None:
         toc = extract_toc(body)
         dst = OUT / "docs" / f"{slug}.html"
         dst.parent.mkdir(parents=True, exist_ok=True)
+        active = f"docs/{slug}.html"
+        if slug == "providers/index":
+            active = "docs/providers/"
         dst.write_text(
-            page(f"rootle — {title.lower()}", body, f"docs/{slug}.html", toc)
+            page(f"rootle — {title.lower()}", body, active, toc, prefix)
         )
         print(f"built docs/{slug}.html from {src} ({len(toc)} toc entries)")
 

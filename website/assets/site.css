@@ -71,6 +71,7 @@ body.home .content { max-width: 1080px; }
 }
 .rail nav a:hover { background: var(--card); color: var(--text); text-decoration: none; }
 .rail nav a.active { background: var(--card); color: var(--blue); }
+.rail nav a.sub { padding-left: 26px; font-size: 13px; }
 .rail nav a.gh { color: var(--faint); margin-top: 14px; }
 .rail nav a.gh:hover { color: var(--text); }
 .rail-toc { margin-top: 4px; }
