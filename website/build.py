@@ -68,6 +68,7 @@ def asset_version() -> str:
 PAGES: dict[str, tuple[str, str]] = {
     "github": ("doc/github.md", "github"),
     "gitlab": ("doc/gitlab.md", "gitlab"),
+    "bitbucket": ("doc/bitbucket.md", "bitbucket"),
     "settings": ("doc/settings.md", "settings"),
     "themes": ("doc/themes.md", "themes"),
     # Trimmed site version; the app repo carries the full wire spec.
