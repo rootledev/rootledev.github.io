@@ -312,7 +312,11 @@ article.md blockquote {
 .chips .chip.status { color: var(--yellow); }
 p.alt { font-size: 13.5px; color: var(--faint); margin: 0 0 22px; }
 p.alt code { border: none; padding: 0 2px; }
+p.alt.update-line { margin: 2px 0 8px; }
+p.alt.update-line code { color: var(--dim); }
 .hero p.alt { text-align: center; }
+.chips a.chip { text-decoration: none; }
+.chips a.chip.version:hover { text-decoration: underline; }
 
 /* ---- hero installer: one terminal bar — tabs, command, copy
    (gripsack.dev pattern) ---- */

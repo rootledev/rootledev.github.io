@@ -52,6 +52,7 @@
     curl: {
       cmd: "curl -fsSL https://rootle.dev/install.sh | sh",
       note: "prebuilt binary \u00b7 x86_64 + arm64 \u00b7 " + RELEASES,
+      update: "rootle update",
     },
     brew: IS_MAC
       ? {
@@ -59,20 +60,24 @@
           note:
             'homebrew cask \u2014 prebuilt \u00b7 linux: <button class="inline-copy" data-copy="' +
             BREW_SRC + '"><code>' + BREW_SRC + "</code></button> (from source)",
+          update: "brew upgrade --cask rootledev/tap/rootle",
         }
       : {
           cmd: BREW_SRC,
           note:
             'homebrew formula \u2014 builds from source \u00b7 macOS: <button class="inline-copy" data-copy="' +
             BREW_CASK + '"><code>' + BREW_CASK + "</code></button> (prebuilt cask)",
+          update: "brew upgrade rootledev/tap/rootle",
         },
     cargo: {
       cmd: "cargo install rootle",
       note: "from crates.io \u2014 builds from source \u00b7 needs a rust toolchain",
+      update: "cargo install rootle",
     },
     mise: {
       cmd: "mise use cargo:rootle",
       note: "pinned per-project via mise\u2019s cargo backend \u00b7 " + RELEASES,
+      update: "mise up rootle",
     },
   };
 
@@ -91,6 +96,8 @@
     if (copy) copy.setAttribute("data-copy", data.cmd);
     var note = document.querySelector("[data-install-note]");
     if (note) note.innerHTML = data.note;
+    var upd = document.querySelector("[data-install-update]");
+    if (upd) upd.textContent = data.update;
   }
 
 

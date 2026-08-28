@@ -90,6 +90,7 @@ RAIL: list[tuple[str, str, str]] = [
     ("docs/providers/your-forge.html", "your forge", "sub"),
     ("docs/provider-protocol.html", "protocol", ""),
     ("docs/settings.html", "settings", ""),
+    ("changelog/", "changelog", ""),
     ("docs/roadmap.html", "roadmap", ""),
 ]
 
@@ -317,6 +318,33 @@ def build_docs() -> None:
             f'<a href="./providers/{name}.html">moved</a>\n'
         )
 
+def build_changelog() -> None:
+    """The app repo's CHANGELOG.md, rendered at /changelog/ — the URL
+    `rootle update` names as what's-new (one #anchor per release), and
+    the landing's version chip links to. A raw copy also lands at
+    /CHANGELOG.md so binaries that print that URL (0.8.3) resolve."""
+    src = CODE / "CHANGELOG.md"
+    if not src.exists():
+        print("warning: no code/ checkout — skipping changelog")
+        return
+    text = src.read_text()
+    shutil.copy(src, OUT / "CHANGELOG.md")
+    body = markdown.markdown(
+        text,
+        extensions=["pymdownx.superfences", "tables", "toc", "sane_lists"],
+    )
+    # `## [0.8.3] — 2026-08-28` slugs to id="083-2026-08-28"; shorten
+    # release headings to the digits-only anchor the binary prints
+    # (#083) — version digits followed by the date slug.
+    body = re.sub(
+        r'<h2 id="(\d+)-\d{4}-\d{2}-\d{2}"', r'<h2 id="\1"', body
+    )
+    toc = extract_toc(body)
+    dst = OUT / "changelog" / "index.html"
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    dst.write_text(page("rootle — changelog", body, "changelog/", toc, "../"))
+    print(f"built changelog/index.html from code/CHANGELOG.md ({len(toc)} releases)")
+
 
 def assemble() -> None:
     if OUT.exists():
@@ -356,3 +384,4 @@ def assemble() -> None:
 if __name__ == "__main__":
     assemble()
     build_docs()
+    build_changelog()
