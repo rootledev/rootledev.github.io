@@ -395,7 +395,7 @@ table.compare .part { color: var(--yellow); font-size: 13px; }
 
 /* ---- keybindings cheatsheet (three keycap columns, one card) ---- */
 .keys-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 28px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 28px;
   background: var(--card); border: 1px solid var(--border);
   border-radius: 12px; padding: 20px 24px;
 }

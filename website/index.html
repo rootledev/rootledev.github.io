@@ -160,7 +160,6 @@
         <tr><td><span class="kb">h / l</span></td><td class="desc">out · in</td></tr>
         <tr><td><span class="kb">J / K</span></td><td class="desc">preview line cursor</td></tr>
         <tr><td><span class="kb">/</span></td><td class="desc">filter any list</td></tr>
-        <tr><td><span class="kb">n / N</span></td><td class="desc">next · prev match</td></tr>
         <tr><td><span class="kb">v</span></td><td class="desc">visual multi-select</td></tr>
       </tbody></table>
     </div>
@@ -169,20 +168,27 @@
       <table><tbody>
         <tr><td><span class="kb">␣ s</span></td><td class="desc">repo search</td></tr>
         <tr><td><span class="kb">␣ f</span></td><td class="desc">find file</td></tr>
-        <tr><td><span class="kb">␣ g</span></td><td class="desc">grep</td></tr>
-        <tr><td><span class="kb">␣ /</span></td><td class="desc">find in previewed file</td></tr>
-        <tr><td><span class="kb">enter</span></td><td class="desc">jump to match</td></tr>
-        <tr><td><span class="kb">esc</span></td><td class="desc">cancel · clear</td></tr>
+        <tr><td><span class="kb">␣ g</span></td><td class="desc">grep — <code>"exact"</code> · <code>-not</code> · <code>language:rs</code></td></tr>
+        <tr><td><span class="kb">enter</span></td><td class="desc">a hit opens the whole file</td></tr>
+        <tr><td><span class="kb">tab</span></td><td class="desc">facet chips (repo · language)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="kg-col">
+      <h5>the pane</h5>
+      <table><tbody>
+        <tr><td><span class="kb">␣ p</span></td><td class="desc">preview takes focus, zoomed</td></tr>
+        <tr><td><span class="kb">gg·G·^D·%</span></td><td class="desc">vim motions · <code>:42</code> jumps</td></tr>
+        <tr><td><span class="kb">␣ b</span></td><td class="desc">branches &amp; tags</td></tr>
+        <tr><td><span class="kb">h · b</span></td><td class="desc">in the pane: history · blame</td></tr>
       </tbody></table>
     </div>
     <div class="kg-col">
       <h5>act</h5>
       <table><tbody>
-        <tr><td><span class="kb">␣ y</span></td><td class="desc">yank URL (line-anchored)</td></tr>
+        <tr><td><span class="kb">␣ y</span></td><td class="desc">yank URL (line-anchored; commit-anchored in history)</td></tr>
         <tr><td><span class="kb">↵</span></td><td class="desc">open in editor</td></tr>
-        <tr><td><span class="kb">:</span></td><td class="desc">command line</td></tr>
+        <tr><td><span class="kb">:</span></td><td class="desc">command line · <code>:clone</code></td></tr>
         <tr><td><span class="kb">?</span></td><td class="desc">every keybinding</td></tr>
-        <tr><td><span class="kb">␣ c</span></td><td class="desc">clear marks</td></tr>
         <tr><td><span class="kb">q</span></td><td class="desc">quit</td></tr>
       </tbody></table>
     </div>
