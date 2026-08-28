@@ -57,6 +57,11 @@ then calls like `repo/tree` and `repo/blob`:
 → {"jsonrpc":"2.0","id":1,"method":"repo/tree","params":{"repo":"local/alpha"}}
 ← {"jsonrpc":"2.0","id":1,"result":{"entries":[…],"truncated":false,"branch":"main"}}
 
+Revisions (v1.5): adapters that can answer branches/tags, commit logs,
+and blame declare `refs` / `log` / `blame` capabilities; rootle drives
+its switcher, history lens, and blame lens off them. Bitbucket declares
+`blame: false` — it has no blame API, and that's the honest answer.
+
 `search/code` streams (v1.3): rootle sends `"partial": true` and your
 adapter may emit `$/partial` notifications carrying batches of items —
 results render in the TUI as they arrive. The final reply is then

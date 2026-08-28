@@ -25,6 +25,16 @@ numbered, status in each header.
 - The provider manager: checksum-verified installs from GitHub
   releases *or* plain-HTTP artifact hosts, `update`/`upgrade`/`pin`,
   `--path` for config-managed deployments
+- Revision awareness (v0.8.0, protocol v1.5): `␣ b` switches
+  branches/tags, `rootle owner/repo@ref`, `␣ p h` file history with
+  open-at-commit, `␣ p b` blame run-margins, sha-anchored permalinks
+- The preview submode (`␣ p`): focus + zoom, vim vertical motions
+  (counts, `gg`/`G`, pages, paragraphs, `%`, `zt/zz/zb`, `:<line>`)
+- A state-only modeline with a `? keys` affordance; transient modes get
+  a glued hint strip — one hint surface per context
+- `rootle update` self-updates tarball installs (checksum-verified,
+  atomic); the modeline chips `↑ vX.Y.Z` when a newer release exists;
+  CHANGELOG.md rides every release from 0.8.0
 - [forge-conformance](https://github.com/rootledev/forge-conformance):
   every protocol gotcha as a numbered case (FC-001..080) — all three
   providers run it in CI; it caught two real bugs on landing
@@ -33,13 +43,6 @@ numbered, status in each header.
 
 ## Next
 
-- **Revision navigation** — the current focus. `rootle owner/repo@branch`,
-  an in-app refs switcher (`␣ b`), file history and a blame lens in the
-  preview submode (`␣ p` — the pane focuses and zooms, vim motions
-  included). Mock stage reviewed on the app repo's
-  `feat/revision-mocks` branch; wire work (`repo/refs`, `ref?`,
-  `repo/log`, `repo/blame`) follows the mock. See
-  [plans/0016](https://github.com/rootledev/rootle/blob/main/plans/0016-product-direction.md).
 - **Symbol search** — `␣ s` for symbols: the tree-sitter spike passed
   (320 files/s single-threaded, ~13 MiB on a 908-file corpus), so every
   forge gets it via the blob cache, with provider indexes preferred
