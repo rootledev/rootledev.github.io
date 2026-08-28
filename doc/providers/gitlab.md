@@ -61,7 +61,9 @@ Everything the GitHub backend does, through the same protocol:
   treats repos as opaque strings and never parses them.
 - Code search on self-managed GitLab requires advanced search (a
   license); the provider surfaces the honest error rather than failing
-  silently.
+  silently. Query syntax: [GitLab's advanced-search
+  syntax](https://docs.gitlab.com/user/search/advanced_search_syntax/)
+  plus rootle's own grammar — see [search syntax](./index.html#search-syntax).
 - The disk cache lives at `~/.cache/rootle/providers/rootle-gitlab/` —
   content-addressed, immutable, safe to delete at any time.
 

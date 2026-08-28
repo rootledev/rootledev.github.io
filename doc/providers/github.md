@@ -37,7 +37,13 @@ rootle
 - **Open** any file read-only in your editor (`Enter`)
 - **Yank** browser URLs (`␣ y`)
 - **Clone** through the wizard (`v` marks, `:clone`)
-- **Code search** requires authentication (anonymous gets everything else)
+- **Code search** requires authentication (anonymous gets everything else);
+  syntax: [GitHub's code-search
+  syntax](https://docs.github.com/en/search-github/github-code-search/understanding-github-code-search-syntax)
+  plus rootle's own grammar (quoted literals, `-` negation,
+  `language:`) — see [search syntax](./index.html#search-syntax). Young
+  or low-activity repos aren't in GitHub's index: a scoped grep there
+  gets a local tarball grep (0.8.4+) instead of a quiet zero
 
 ## GitHub Enterprise
 

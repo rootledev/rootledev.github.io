@@ -57,7 +57,7 @@
     <div class="step"><b>[01]</b><h3>install</h3><p>one static binary — the box above covers curl, brew, cargo, mise.</p></div>
     <div class="step"><b>[02]</b><h3>auth</h3><p><code>gh auth login</code> covers GitHub; everything else is one env var — tokens stay in your environment, rootle never sees provider auth.</p></div>
     <div class="step"><b>[03]</b><h3>run</h3><p><code>rootle</code> opens repo search; <code>rootle owner/repo</code> jumps straight in; <code>@branch</code> pins a revision.</p></div>
-    <div class="step"><b>[04]</b><h3>beyond github</h3><p><code>rootle provider install gitlab</code> — checksum-verified, 30 seconds. have an internal forge? <a href="./docs/providers/your-forge.html">four methods add it</a>.</p></div>
+    <div class="step"><b>[04]</b><h3>beyond github</h3><p><code>rootle provider install gitlab</code> — checksum-verified, 30 seconds. have an internal forge? <a href="./docs/providers/your-forge.html">four methods add it</a>. declare it once, and updates ride <code>rootle update</code>.</p></div>
   </div>
 </section>
 
@@ -97,7 +97,7 @@
     <div class="feat">
       <div class="num">[02]</div>
       <h3>find &amp; grep</h3>
-      <p>Full-screen, Zed-style results in decorated per-file boxes: quoted literals, negation and <code>language:</code> qualifiers, streaming facet chips, and <code>enter</code> expands a hit into the whole file at the match line. Scope to a repo or search globally.</p>
+      <p>Full-screen, Zed-style results in decorated per-file boxes: quoted literals, negation and <code>language:</code> qualifiers, streaming facet chips, and <code>enter</code> expands a hit into the whole file at the match line. Scope to a repo or search globally. <a href="./docs/providers/index.html#search-syntax">syntax docs</a> per forge.</p>
       <div class="keys"><span class="kb">␣ f</span><span class="kb">␣ g</span><span class="kb">/</span></div>
     </div>
     <div class="feat">
