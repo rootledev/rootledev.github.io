@@ -83,14 +83,16 @@ PAGES: dict[str, tuple[str, str]] = {
 # under their section's link, indented.
 RAIL: list[tuple[str, str, str]] = [
     ("index.html", "home", ""),
+    ("changelog/", "changelog", ""),
+    ("", "forges", "head"),
     ("docs/providers/", "providers", ""),
     ("docs/providers/github.html", "github", "sub"),
     ("docs/providers/gitlab.html", "gitlab", "sub"),
     ("docs/providers/bitbucket.html", "bitbucket", "sub"),
     ("docs/providers/your-forge.html", "your forge", "sub"),
+    ("", "reference", "head"),
     ("docs/provider-protocol.html", "protocol", ""),
     ("docs/settings.html", "settings", ""),
-    ("changelog/", "changelog", ""),
     ("docs/roadmap.html", "roadmap", ""),
 ]
 
@@ -166,10 +168,13 @@ PALETTE_DOTS = [
 
 
 def rail(active: str, toc: list[tuple[str, str]], prefix: str = "../") -> str:
-    links = "".join(
-        f'    <a{" class=\"active\"" if href == active else (" class=\"" + cls + "\"" if cls else "")} href="{prefix}{href}">{label}</a>\n'
-        for href, label, cls in RAIL
-    )
+    def rail_link(href: str, label: str, cls: str) -> str:
+        if cls == "head":
+            return f'    <span class="rail-head">{label}</span>\n'
+        active_cls = ' class="active"' if href == active else (f' class="{cls}"' if cls else "")
+        return f'    <a{active_cls} href="{prefix}{href}">{label}</a>\n'
+
+    links = "".join(rail_link(href, label, cls) for href, label, cls in RAIL)
     toc_html = "".join(f'    <a href="#{anchor}">{label}</a>\n' for label, anchor in toc)
     toc_block = (
         f'  <span class="rail-head">on this page</span>\n  <div class="rail-toc">\n{toc_html}  </div>\n'
