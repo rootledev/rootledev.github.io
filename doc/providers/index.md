@@ -55,3 +55,8 @@ it for you). A config synced to a machine without the binary gets a
 consent prompt at startup, then the verified install. Optional pins —
 `tag = "v0.2.1"`, `sha = "…"` — lock the build for reproducibility.
 `rootle update` sweeps the app *and* every unpinned provider.
+
+If a configured provider won't start, 0.8.6+ asks — retry once,
+browse github, or edit the config in your editor — and the modeline
+keeps a sticky notice (forge chip tinted) for as long as you're on
+the fallback. Fallbacks are never silent.
