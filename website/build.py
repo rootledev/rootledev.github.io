@@ -83,16 +83,14 @@ PAGES: dict[str, tuple[str, str]] = {
 # under their section's link, indented.
 RAIL: list[tuple[str, str, str]] = [
     ("index.html", "home", ""),
-    ("changelog/", "changelog", ""),
-    ("", "forges", "head"),
     ("docs/providers/", "providers", ""),
-    ("docs/providers/github.html", "github", "sub"),
-    ("docs/providers/gitlab.html", "gitlab", "sub"),
-    ("docs/providers/bitbucket.html", "bitbucket", "sub"),
-    ("docs/providers/your-forge.html", "your forge", "sub"),
-    ("", "reference", "head"),
+    ("docs/providers/github.html", "↳ github", "child"),
+    ("docs/providers/gitlab.html", "↳ gitlab", "child"),
+    ("docs/providers/bitbucket.html", "↳ bitbucket", "child"),
+    ("docs/providers/your-forge.html", "↳ your forge", "child"),
     ("docs/provider-protocol.html", "protocol", ""),
     ("docs/settings.html", "settings", ""),
+    ("changelog/", "changelog", ""),
     ("docs/roadmap.html", "roadmap", ""),
 ]
 
@@ -169,10 +167,11 @@ PALETTE_DOTS = [
 
 def rail(active: str, toc: list[tuple[str, str]], prefix: str = "../") -> str:
     def rail_link(href: str, label: str, cls: str) -> str:
-        if cls == "head":
-            return f'    <span class="rail-head">{label}</span>\n'
-        active_cls = ' class="active"' if href == active else (f' class="{cls}"' if cls else "")
-        return f'    <a{active_cls} href="{prefix}{href}">{label}</a>\n'
+        # child rows ("↳") still mark active — like gripsack's docs.
+        active_cls = "active" if href == active else ""
+        classes = " ".join(c for c in (cls, active_cls) if c)
+        cls_attr = f' class="{classes}"' if classes else ""
+        return f'    <a{cls_attr} href="{prefix}{href}">{label}</a>\n'
 
     links = "".join(rail_link(href, label, cls) for href, label, cls in RAIL)
     toc_html = "".join(f'    <a href="#{anchor}">{label}</a>\n' for label, anchor in toc)
