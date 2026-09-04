@@ -92,6 +92,7 @@ startup. Scaffolding a provider:
 | `VISUAL`, `EDITOR` | Editor fallbacks when `[editor].program` is unset. |
 | `ROOTLE_CLIPBOARD` | Path to a file — yanks (`␣ y`) write there instead of the clipboard (scripts/CI). |
 | `ROOTLE_TRACE` | Path to a log file — worker request tracing (debugging). |
+| `ROOTLE_HEADLESS_COLS`, `ROOTLE_HEADLESS_ROWS` | `--headless` viewport (default 100×30). |
 | `NO_COLOR` | **Ignored** — a full-screen TUI's colors are semantic, like vim/helix. |
 
 ## Command line
@@ -101,6 +102,7 @@ rootle                    # launch (search popup only on fresh state)
 rootle owner/repo         # skip the popup, open a repo
 rootle --config PATH      # alternate config file
 rootle --theme NAME       # override [theme].name for this session
+rootle --headless SCRIPT # scripted driver: keys in, frames + state JSON out (no terminal; `-` = stdin)
 rootle --version | -V
 ```
 
