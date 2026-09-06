@@ -20,7 +20,7 @@ numbered, status in each header.
 - Eleven palettes with a picker, `[ui] border` shapes, optional
   Nerd Font powerline chrome, hot-reloading `:settings`
 - Providers: GitHub in-tree; GitLab and Bitbucket as one-binary
-  adapters speaking NDJSON-RPC over stdio (protocol through v1.4 —
+  adapters speaking NDJSON-RPC over stdio (protocol through v1.6 —
   streaming, honesty chips, error taxonomy, bounded compute)
 - The provider manager: checksum-verified installs from GitHub
   releases *or* plain-HTTP artifact hosts, `update`/`upgrade`/`pin`,
@@ -28,6 +28,22 @@ numbered, status in each header.
 - Revision awareness (v0.8.0, protocol v1.5): `␣ b` switches
   branches/tags, `rootle owner/repo@ref`, `␣ p h` file history with
   open-at-commit, `␣ p b` blame run-margins, sha-anchored permalinks
+- **The commit viewer** (protocol v1.6): from the history lens, `d`
+  inspects the commit itself — full message, changed files with `/`
+  filtering, per-file deltas with old/new line gutters, quiet
+  add/delete tints, intra-line emphasis, `]f`/`[f` file stepping, and
+  the Esc ladder back to where you were
+- **A crate workspace** — the seam (`rootle-provider`), the transport
+  (`rootle-stdio`), GitHub (`rootle-github`), the manager
+  (`rootle-manager`), typed diffs (`rootle-diff`): compile-time
+  boundaries where there used to be convention
+- **Typed identity** — repo/sha/ref are newtypes across the provider
+  seam, staleness is a `Generation` clock, VISUAL marks are a typed
+  key; house style now writes the rules down
+- **The provider protocol is model-checked** — a TLA+ spec of the
+  transport lifecycle (streaming, cancellation, restart) with seven
+  named invariants and a deliberately-broken mutant, both gated in
+  CI; two long-standing prose ambiguities got settled from the code
 - The preview submode (`␣ p`): focus + zoom, vim vertical motions
   (counts, `gg`/`G`, pages, paragraphs, `%`, `zt/zz/zb`, `:<line>`)
 - A state-only modeline with a `? keys` affordance; transient modes get
@@ -47,13 +63,30 @@ numbered, status in each header.
   (320 files/s single-threaded, ~13 MiB on a 908-file corpus), so every
   forge gets it via the blob cache, with provider indexes preferred
   when they exist. [plans/0013](https://github.com/rootledev/rootle/blob/main/plans/0013-symbol-search-gate.md).
+- **One list engine everywhere** — the shared cursor/filter/scroll
+  machinery landed with the commit viewer; the older surfaces (refs
+  popup, keybinds, settings, clone wizard, history rows) migrate onto
+  it, then the keymap tables become dispatch (not just hints).
+  [plans/0026](https://github.com/rootledev/rootle/blob/main/plans/0026-unified-components.md).
 - **In-app provider management** — browse/install/switch providers
   without leaving the TUI (the manager is CLI-only today).
 - **The demo tape tells a workflow story** — find → browse → grep →
-  expand → yank, not just palettes.
+  expand → *inspect a commit* → yank, not just palettes.
 
 ## Evaluating
 
+- **Side-by-side diffs** — rejected for now with reasons recorded
+  (strop's plan 0010 research): unified + intra-line emphasis carries
+  the signal at half the geometry cost; the emphasis engine's run
+  pairing is the alignment basis if a split view ever earns itself.
+- **Syntax highlighting inside diff rows** — two virtual files per
+  hunk is real machinery; tints + gutters already carry the scan.
+  Revisits with context folding.
+- **Context folding / gap expanders** — needs per-side fetch-more
+  plumbing; follows side-by-side.
+- **Repo-wide history** — the protocol takes `path: none` already;
+  the UI entry point waits for a demand (and brings the commit-graph
+  lanes question with it).
 - **Nerd Font chrome by default** — the powerline modeline is opt-in
   because a terminal can't report its font and tofu-on-first-launch is
   the worst first impression. Open: a reliable probe or a better
@@ -63,13 +96,16 @@ numbered, status in each header.
   waits on a first real workspace.
 - **`$/progress` (work-done notifications)** — a v2 protocol question;
   decided with its first consumer (cold-org enumeration), not before.
+- **SBOM / `cargo auditable` builds** — provenance attestation landed
+  in 0.9.0; the SBOM audit is the remaining half of the verified-
+  release story.
 
 ## Decidedly not
 
 - **PRs / issues / notifications dashboards** — gh-dash and the web
   own that. rootle stays on code.
 - **A generic git frontend** — revisions are for browsing, not
-  staging/committing.
+  staging/committing. The commit viewer inspects; it never mutates.
 - **AI features** — the value here is speed, deterministic navigation,
   and composability.
 
