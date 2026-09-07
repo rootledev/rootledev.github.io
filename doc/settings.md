@@ -3,8 +3,8 @@
 Every rootle setting: key, acceptable values, meaning, default. Config
 lives at `~/.config/rootle/config.toml` (`$ROOTLE_CONFIG` does not apply —
 use `rootle --config PATH` for an alternate file). Missing keys fall
-back to defaults; a malformed file never blocks startup (defaults are
-used silently). The `:settings` popup edits these in place and writes the same file —
+back to defaults; malformed configuration is reported in the status line
+without blocking startup. The `:settings` popup edits these in place and writes the same file —
 hot-reloads the theme on save. Sections live in a sidebar (Tab/h/l);
 themes and the provider kind are radio lists, booleans are ●/○ dots,
 and text fields edit in place — ␣/enter activates the row. Committing
