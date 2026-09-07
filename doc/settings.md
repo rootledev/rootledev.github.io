@@ -54,8 +54,15 @@ return.
 own palette, place a TOML file under `~/.config/rootle/themes/` with
 `[semantic]` role names mapped to hex colors, or select it with `path`.
 
-Syntax highlighting maps syntect scopes onto the active palette — a
-palette change recolors previews automatically.
+Since v0.11.0, syntax highlighting uses statically linked Tree-sitter
+grammars and maps captures onto the active palette. A palette change
+recolors cached previews automatically.
+
+The embedded set covers Rust, Python, JavaScript/JSX, TypeScript/TSX,
+Go, C/C++, Java, C#, Ruby, PHP, Bash, Lua, JSON, TOML, YAML, HTML,
+CSS and Markdown. Supported-language Markdown fences and HTML scripts
+are highlighted with their embedded grammars. Unknown file types remain
+plain text. No grammar downloads or shared-library installation are needed.
 
 Commit deltas use `diff_add_fg`, `diff_del_fg`, `diff_add_bg`,
 `diff_del_bg`, `diff_add_strong`, `diff_del_strong` and `diff_band`.
@@ -102,10 +109,10 @@ warning in the status line — a provider misconfiguration never blocks
 startup. Scaffolding a provider:
 [skills/rootle-provider](../skills/rootle-provider/SKILL.md).
 
-## Session diagnostics (development builds)
+## Session diagnostics
 
-These switches are available on the development branch, **not in v0.10.0**.
-They work with the TUI, headless scripts, provider commands and self-update:
+Available since v0.11.0, these switches work with the TUI, headless
+scripts, provider commands and self-update:
 
 ```sh
 rootle --log
@@ -137,7 +144,7 @@ This supplies evidence for investigation, not deterministic remote replay.
 | `ROOTLE_TOKEN`, `GITHUB_TOKEN` | GitHub token (GitHub provider only; `gh auth token` is tried after these). Code search requires a token. |
 | `VISUAL`, `EDITOR` | Editor fallbacks when `[editor].program` is unset. |
 | `ROOTLE_CLIPBOARD` | Path to a file — yanks (`␣ y`) write there instead of the clipboard (scripts/CI). |
-| `ROOTLE_TRACE` | Diagnostic file path. Development builds write a new private JSONL session; v0.10.0 uses the older worker-only text log. |
+| `ROOTLE_TRACE` | Path for a new private JSONL diagnostic session; existing files are refused. |
 | `ROOTLE_HEADLESS_COLS`, `ROOTLE_HEADLESS_ROWS` | `--headless` viewport (default 100×30). |
 | `NO_COLOR` | Ignored by the full-screen TUI, whose colors are semantic. Provider-management and update CLI output honor it. |
 
@@ -151,6 +158,37 @@ rootle --theme NAME       # override [theme].name for this session
 rootle --headless SCRIPT # scripted driver: keys in, frames + state JSON out (no terminal; `-` = stdin)
 rootle --version | -V
 ```
+
+### Headless scripts
+
+`--headless SCRIPT` reads one directive per line; `-` reads stdin.
+Blank lines and lines starting with `#` are ignored:
+
+| Directive | Meaning |
+|---|---|
+| `keys <text>` | Send keys, including `<esc>`, `<cr>`, `<bs>`, `<tab>`, `<space>` and arrow-key tokens. |
+| `settle [ms]` | Wait for outstanding workers and queued follow-ups; default timeout 10000ms. |
+| `wait <ms>` | Process events for a fixed duration. |
+| `frame` | Print the rendered cell grid. |
+| `state` | Print JSON describing the current app state. |
+
+For a tree-rendering CI check:
+
+```sh
+printf 'settle\nframe\nstate\n' | rootle owner/repo --headless -
+```
+
+Startup waits for outstanding work, with a
+10-second bound. Use `settle` after navigation and before sampling
+`frame` or `state`. Its optional argument changes the timeout for that
+step, not startup. A timeout exits nonzero and stops the script before
+later samples. Completion includes failures: inspect `state.status` and
+the rendered frame to distinguish a populated tree from a provider error.
+
+Since v0.11.0, `settle` tracks real work rather than guessing from channel
+silence. Older releases used a 400ms quiet window and could return while a
+slow provider was still loading. All directives are listed in `--help`.
+
 
 ## Where things live
 

@@ -40,6 +40,24 @@ numbered, status in each header.
 - Four-platform releases (linux + macOS, both arches), crates.io,
   homebrew formula + cask, checksum-verified `install.sh`
 
+## Shipped in 0.11.0
+
+[Released 2026-09-07](https://github.com/rootledev/rootle/releases/tag/v0.11.0):
+
+- **Tree-sitter highlighting** — statically embedded grammars, multiline
+  context, Markdown fenced-language and HTML-script injections, and
+  palette-following colors. Compiled queries are cached and parser state
+  is reused; Linux binaries remain fully static.
+- **Reliable headless waits** — `settle [ms]` waits for actual workers and
+  their queued follow-ups. Timeouts fail the run instead of sampling a
+  half-loaded tree. The default bound is 10 seconds; `--help` lists the
+  complete script language.
+- **Diagnostic sessions** — private bounded JSONL traces across input,
+  actions, state, rendering, workers, provider traffic, HTTP/cache and
+  CLI lifecycle. `--log-content` explicitly enables sensitive capture.
+  Incomplete logs say so; existing files are never overwritten.
+  [Plan 0030](https://github.com/rootledev/rootle/blob/main/plans/0030-session-diagnostics.md).
+
 ## Shipped in 0.10.0
 
 [Released 2026-09-07](https://github.com/rootledev/rootle/releases/tag/v0.10.0):
@@ -65,14 +83,6 @@ Implementation and verification details live in
   deliberately faulty variants must fail by name. Production-router
   traces and real-child tests bridge to Rust, without claiming formal
   refinement or unbounded soundness/completeness.
-
-## Implemented, unreleased
-
-- **Diagnostic sessions** — private bounded JSONL traces across input,
-  actions, state, actual rendering, workers, provider traffic, HTTP/cache and
-  CLI lifecycle. `--log-content` explicitly enables sensitive capture.
-  Incomplete logs say so; existing files are never overwritten.
-  [Plan 0030](https://github.com/rootledev/rootle/blob/main/plans/0030-session-diagnostics.md).
 
 ## Next
 
