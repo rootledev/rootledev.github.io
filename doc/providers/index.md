@@ -16,8 +16,8 @@ anything else is a child process speaking the [stdio protocol](../provider-proto
 Rolling your own forge? The [wire spec](../provider-protocol.html) and
 the [scaffolding skill](https://github.com/rootledev/rootle/tree/main/skills/rootle-provider)
 are the whole contract — the reference adapter
-([fs_provider.py](https://github.com/rootledev/rootle/blob/main/examples/providers/fs_provider.py),
-~200 lines of Python serving a local directory) is the worked example.
+([fs_provider.py](https://github.com/rootledev/rootle/blob/main/crates/stdio/examples/fs_provider.py)
+and its Python siblings serving directories and Git worktrees) is the worked example.
 
 ## Search syntax
 

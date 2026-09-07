@@ -51,11 +51,29 @@ return.
 | `path` | string, optional | unset | Explicit palette file; wins over `name`. |
 
 `--theme NAME` (CLI) overrides `name` for one session. To write your
-own palette — file format, overridable roles, worked example — see
-[themes.md](themes.md).
+own palette, place a TOML file under `~/.config/rootle/themes/` with
+`[semantic]` role names mapped to hex colors, or select it with `path`.
 
 Syntax highlighting maps syntect scopes onto the active palette — a
 palette change recolors previews automatically.
+
+Commit deltas use `diff_add_fg`, `diff_del_fg`, `diff_add_bg`,
+`diff_del_bg`, `diff_add_strong`, `diff_del_strong` and `diff_band`.
+Unspecified diff colors follow the active light/dark palette; explicit
+overrides win.
+
+## Commit inspection
+
+`␣ p` focuses the file preview; `h` opens history and `d` inspects its
+selected commit. `Tab` switches between the full message and changed files;
+`j/k` and `gg/G` navigate the focused content. `/` filters files.
+`Enter` opens a unified delta, `]f`/`[f` step files, `h/l` scroll long
+delta lines, and `Y` copies the provider's commit URL when available.
+`Esc` unwinds the delta, detail, history and preview one level at a time.
+
+Providers may omit binary or large patches or truncate a file list.
+Those states are labeled; an unavailable patch is not an empty change.
+The viewer is read-only and never stages, commits or reverts code.
 
 ## `[cache]` — content store
 
@@ -93,7 +111,7 @@ startup. Scaffolding a provider:
 | `ROOTLE_CLIPBOARD` | Path to a file — yanks (`␣ y`) write there instead of the clipboard (scripts/CI). |
 | `ROOTLE_TRACE` | Path to a log file — worker request tracing (debugging). |
 | `ROOTLE_HEADLESS_COLS`, `ROOTLE_HEADLESS_ROWS` | `--headless` viewport (default 100×30). |
-| `NO_COLOR` | **Ignored** — a full-screen TUI's colors are semantic, like vim/helix. |
+| `NO_COLOR` | Ignored by the full-screen TUI, whose colors are semantic. Provider-management and update CLI output honor it. |
 
 ## Command line
 

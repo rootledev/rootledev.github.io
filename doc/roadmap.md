@@ -19,31 +19,15 @@ numbered, status in each header.
   greyed, sorted by last push (protocol v1.4)
 - Eleven palettes with a picker, `[ui] border` shapes, optional
   Nerd Font powerline chrome, hot-reloading `:settings`
-- Providers: GitHub in-tree; GitLab and Bitbucket as one-binary
-  adapters speaking NDJSON-RPC over stdio (protocol through v1.6 —
-  streaming, honesty chips, error taxonomy, bounded compute)
+- Providers: GitHub in-tree; GitLab and Bitbucket as managed one-binary
+  adapters speaking NDJSON-RPC over stdio, with capability negotiation,
+  streaming, honesty chips and structured errors
 - The provider manager: checksum-verified installs from GitHub
   releases *or* plain-HTTP artifact hosts, `update`/`upgrade`/`pin`,
   `--path` for config-managed deployments
 - Revision awareness (v0.8.0, protocol v1.5): `␣ b` switches
   branches/tags, `rootle owner/repo@ref`, `␣ p h` file history with
   open-at-commit, `␣ p b` blame run-margins, sha-anchored permalinks
-- **The commit viewer** (protocol v1.6): from the history lens, `d`
-  inspects the commit itself — full message, changed files with `/`
-  filtering, per-file deltas with old/new line gutters, quiet
-  add/delete tints, intra-line emphasis, `]f`/`[f` file stepping, and
-  the Esc ladder back to where you were
-- **A crate workspace** — the seam (`rootle-provider`), the transport
-  (`rootle-stdio`), GitHub (`rootle-github`), the manager
-  (`rootle-manager`), typed diffs (`rootle-diff`): compile-time
-  boundaries where there used to be convention
-- **Typed identity** — repo/sha/ref are newtypes across the provider
-  seam, staleness is a `Generation` clock, VISUAL marks are a typed
-  key; house style now writes the rules down
-- **The provider protocol is model-checked** — a TLA+ spec of the
-  transport lifecycle (streaming, cancellation, restart) with seven
-  named invariants and a deliberately-broken mutant, both gated in
-  CI; two long-standing prose ambiguities got settled from the code
 - The preview submode (`␣ p`): focus + zoom, vim vertical motions
   (counts, `gg`/`G`, pages, paragraphs, `%`, `zt/zz/zb`, `:<line>`)
 - A state-only modeline with a `? keys` affordance; transient modes get
@@ -52,10 +36,33 @@ numbered, status in each header.
   atomic); the modeline chips `↑ vX.Y.Z` when a newer release exists;
   CHANGELOG.md rides every release from 0.8.0
 - [forge-conformance](https://github.com/rootledev/forge-conformance):
-  every protocol gotcha as a numbered case (FC-001..080) — all three
-  providers run it in CI; it caught two real bugs on landing
+  numbered protocol cases — all three providers run it in CI
 - Four-platform releases (linux + macOS, both arches), crates.io,
   homebrew formula + cask, checksum-verified `install.sh`
+
+## Implemented for 0.10.0
+
+Implementation and local gates are complete; release publication is
+tracked in [plan 0029](https://github.com/rootledev/rootle/blob/main/plans/0029-polish-release-integration.md).
+
+- **Commit inspection** (protocol v1.6): history `d` opens the full
+  message and changed files; `Enter` opens a unified delta, `]f`/`[f`
+  step files and `Esc` unwinds. Independent message scrolling,
+  `/` file filtering, Unicode-safe emphasis and palette-aware tints.
+  Binary/unavailable/truncated patches remain explicit.
+- **Six-crate workspace**: application, provider vocabulary, stdio
+  transport, GitHub, provider management and typed diffs have distinct
+  dependency boundaries and publish in dependency order.
+- **Stable identity**: provider repo/sha/ref newtypes, domain-tagged
+  request clocks and entity-scoped VISUAL marks, independent of captions.
+- **Shared lists and bindings**: refs, help, settings, clone lists,
+  history and commit files use one filter/selection/viewport engine.
+  Typed tables supply commands and hints; item indices are not row offsets.
+- **Bounded protocol verification**: ten safety invariants, type
+  correctness and two fairness-qualified temporal properties; four
+  deliberately faulty variants must fail by name. Production-router
+  traces and real-child tests bridge to Rust, without claiming formal
+  refinement or unbounded soundness/completeness.
 
 ## Next
 
@@ -63,15 +70,16 @@ numbered, status in each header.
   (320 files/s single-threaded, ~13 MiB on a 908-file corpus), so every
   forge gets it via the blob cache, with provider indexes preferred
   when they exist. [plans/0013](https://github.com/rootledev/rootle/blob/main/plans/0013-symbol-search-gate.md).
-- **One list engine everywhere** — the shared cursor/filter/scroll
-  machinery landed with the commit viewer; the older surfaces (refs
-  popup, keybinds, settings, clone wizard, history rows) migrate onto
-  it, then the keymap tables become dispatch (not just hints).
-  [plans/0026](https://github.com/rootledev/rootle/blob/main/plans/0026-unified-components.md).
 - **In-app provider management** — browse/install/switch providers
   without leaving the TUI (the manager is CLI-only today).
 - **The demo tape tells a workflow story** — find → browse → grep →
   expand → *inspect a commit* → yank, not just palettes.
+- **Remaining domain migration** — legacy response/UI identity fields
+  move from raw strings into domain types as their consumers change;
+  serialized wire strings and ordinary local arithmetic stay simple.
+- **Commit capability across adapters** — extend v1.6 conformance and
+  out-of-tree implementations where their backend APIs support detail.
+  Unsupported adapters must continue to say so rather than fake a patch.
 
 ## Evaluating
 
@@ -99,6 +107,13 @@ numbered, status in each header.
 - **SBOM / `cargo auditable` builds** — provenance attestation landed
   in 0.9.0; the SBOM audit is the remaining half of the verified-
   release story.
+- **Application-state verification** — mode/focus/revision invariants
+  and a broader implementation-model bridge beyond the checked transport.
+- **Transport OS boundaries** — stdin backpressure and inherited
+  child pipes/process trees need runtime stress and deadline work;
+  they are outside the current finite-state model's abstraction.
+- **Pending-key hints** — reconsider a dedicated surface only if the
+  sequence vocabulary outgrows the current mode hint strip.
 
 ## Decidedly not
 
@@ -106,6 +121,8 @@ numbered, status in each header.
   own that. rootle stays on code.
 - **A generic git frontend** — revisions are for browsing, not
   staging/committing. The commit viewer inspects; it never mutates.
+- **Generational arenas** — fixed browser/overlay ownership does not
+  need one. Revisit only if rootle gains dynamically recycled panes.
 - **AI features** — the value here is speed, deterministic navigation,
   and composability.
 
@@ -113,6 +130,6 @@ numbered, status in each header.
 
 Jump across repos, search code, inspect files, and open exactly what
 you need — without cloning a dozen repositories or leaving your
-terminal. GitHub, GitLab, Bitbucket are bundled adapters; your
-company's forge is [four methods away](providers/your-forge.html),
+terminal. GitHub ships in-tree; GitLab and Bitbucket are managed
+adapters. Your company's forge is [four methods away](providers/your-forge.html),
 and the conformance suite is how it earns the badge.

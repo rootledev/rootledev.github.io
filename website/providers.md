@@ -45,7 +45,7 @@ falls back to GitHub with a warning on the status line.
 Try it against a directory of local repos with the reference adapter:
 
 ```
-python3 examples/providers/fs_provider.py ~/code   # serves ~/code/* under "local"
+python3 crates/stdio/examples/fs_provider.py ~/code   # serves ~/code/* under "local"
 ```
 
 ## The shape of a provider
@@ -56,11 +56,17 @@ then calls like `repo/tree` and `repo/blob`:
 ```
 → {"jsonrpc":"2.0","id":1,"method":"repo/tree","params":{"repo":"local/alpha"}}
 ← {"jsonrpc":"2.0","id":1,"result":{"entries":[…],"truncated":false,"branch":"main"}}
+```
 
 Revisions (v1.5): adapters that can answer branches/tags, commit logs,
 and blame declare `refs` / `log` / `blame` capabilities; rootle drives
 its switcher, history lens, and blame lens off them. Bitbucket declares
 `blame: false` — it has no blame API, and that's the honest answer.
+
+Commit inspection (v1.6) is separately opt-in: `commit: true` enables
+`repo/commit` and the history → commit detail → file delta flow.
+Providers report absent, incomplete and binary patches honestly;
+rootle does not invent a diff when the backend cannot supply it.
 
 `search/code` streams (v1.3): rootle sends `"partial": true` and your
 adapter may emit `$/partial` notifications carrying batches of items —
@@ -88,6 +94,15 @@ is built for it:
   out of order — ids route them. Each call has a read deadline
   (`timeout_ms`); during a respawn, a call may additionally wait one
   backoff interval plus a handshake round trip.
+- Cancellation is advisory. Requests retain their identity until a final
+  reply, timeout or disconnect; late replies cannot attach to a newer call.
+- Only opted-in partials extend a read deadline. Waiters share one
+  rebuild outcome rather than silently retrying forever.
+
+The transport design has a bounded TLA+ model with safety checks and
+fairness-qualified temporal properties, four deliberately faulty variants,
+and executable Rust routing/child-process checks. It is not a claim of
+unbounded soundness or a formal proof that every adapter implements it.
 
 The [full spec](https://github.com/rootledev/rootle/blob/main/doc/provider-protocol.md)
 carries the normative wording, error kinds, and the advisory-cancel
@@ -98,7 +113,7 @@ notification.
 - **Full wire spec** — every method, error kinds, cancellation:
   [doc/provider-protocol.md](https://github.com/rootledev/rootle/blob/main/doc/provider-protocol.md)
 - **Reference adapter** (documentation-by-example):
-  [examples/providers/fs_provider.py](https://github.com/rootledev/rootle/blob/main/examples/providers/fs_provider.py)
+  [crates/stdio/examples/fs_provider.py](https://github.com/rootledev/rootle/blob/main/crates/stdio/examples/fs_provider.py)
 - **Scaffolding skill** — capability questionnaire + adapter skeleton:
   [skills/rootle-provider](https://github.com/rootledev/rootle/tree/main/skills/rootle-provider)
 - **Conformance gate** — the canonical numbered suite every adapter

@@ -17,6 +17,7 @@ import hashlib
 import json
 import re
 import shutil
+import tomllib
 import urllib.request
 from pathlib import Path
 
@@ -43,9 +44,8 @@ def app_version() -> str:
     the latest release tag, then 0.0.0."""
     cargo = CODE / "Cargo.toml"
     if cargo.exists():
-        m = re.search(r'^version = "([^"]+)"', cargo.read_text(), re.M)
-        if m:
-            return m.group(1)
+        manifest = tomllib.loads(cargo.read_text())
+        return manifest["workspace"]["package"]["version"]
     try:
         with urllib.request.urlopen(
             "https://api.github.com/repos/rootledev/rootle/releases/latest"
@@ -101,7 +101,6 @@ GITHUB_LINKS: dict[str, str] = {
     "house-style.md": f"{REPO}/blob/main/doc/house-style.md",
     "provider-protocol.md": f"{REPO}/blob/main/doc/provider-protocol.md",
     "../skills/rootle-provider/SKILL.md": f"{REPO}/tree/main/skills/rootle-provider",
-    "../examples/providers/fs_provider.py": f"{REPO}/blob/main/examples/providers/fs_provider.py",
 }
 
 # Doc-local images that are not screenshots: copied alongside img/.
