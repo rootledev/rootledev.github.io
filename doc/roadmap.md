@@ -40,10 +40,12 @@ numbered, status in each header.
 - Four-platform releases (linux + macOS, both arches), crates.io,
   homebrew formula + cask, checksum-verified `install.sh`
 
-## Implemented for 0.10.0
+## Shipped in 0.10.0
 
-Implementation and local gates are complete; release publication is
-tracked in [plan 0029](https://github.com/rootledev/rootle/blob/main/plans/0029-polish-release-integration.md).
+[Released 2026-09-07](https://github.com/rootledev/rootle/releases/tag/v0.10.0):
+four platform tarballs, six published crates and green Homebrew checks.
+Implementation and verification details live in
+[plan 0029](https://github.com/rootledev/rootle/blob/main/plans/0029-polish-release-integration.md).
 
 - **Commit inspection** (protocol v1.6): history `d` opens the full
   message and changed files; `Enter` opens a unified delta, `]f`/`[f`
