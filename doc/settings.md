@@ -102,6 +102,34 @@ warning in the status line — a provider misconfiguration never blocks
 startup. Scaffolding a provider:
 [skills/rootle-provider](../skills/rootle-provider/SKILL.md).
 
+## Session diagnostics (development builds)
+
+These switches are available on the development branch, **not in v0.10.0**.
+They work with the TUI, headless scripts, provider commands and self-update:
+
+```sh
+rootle --log
+rootle --log-file issue.jsonl owner/repo
+rootle --headless steps.txt --log-file issue-full.jsonl --log-content
+```
+
+`--log` / `--log=ALL` prints an automatically selected path under the state
+directory's `rootle/logs/`. `--log=PATH` or `--log-file PATH` selects a new
+file and overrides `ROOTLE_TRACE`. Existing files/symlinks are refused,
+never overwritten or appended; Unix files are private (0600).
+
+Metadata records modes, focus, cursors, selections, worker/request identities,
+HTTP/cache outcomes, errors and cell/style hashes. It excludes typed text,
+file text, rendered glyphs and provider stderr. `--log-content` opts into
+sensitive input/UI/stderr capture; inspect it before sharing. Neither mode
+automatically dumps env values, argument vectors, authorization headers or
+raw RPC/HTTP bodies. Metadata can still reveal private repository paths.
+
+Files end with a `trace_end` verdict. Missing markers, capture failures and
+limits mean incomplete; a complete capture can still describe a failed
+command. Storage is bounded to 64 MiB, 100,000 events and 256 KiB per record.
+This supplies evidence for investigation, not deterministic remote replay.
+
 ## Environment variables
 
 | Variable | Meaning |
@@ -109,7 +137,7 @@ startup. Scaffolding a provider:
 | `ROOTLE_TOKEN`, `GITHUB_TOKEN` | GitHub token (GitHub provider only; `gh auth token` is tried after these). Code search requires a token. |
 | `VISUAL`, `EDITOR` | Editor fallbacks when `[editor].program` is unset. |
 | `ROOTLE_CLIPBOARD` | Path to a file — yanks (`␣ y`) write there instead of the clipboard (scripts/CI). |
-| `ROOTLE_TRACE` | Path to a log file — worker request tracing (debugging). |
+| `ROOTLE_TRACE` | Diagnostic file path. Development builds write a new private JSONL session; v0.10.0 uses the older worker-only text log. |
 | `ROOTLE_HEADLESS_COLS`, `ROOTLE_HEADLESS_ROWS` | `--headless` viewport (default 100×30). |
 | `NO_COLOR` | Ignored by the full-screen TUI, whose colors are semantic. Provider-management and update CLI output honor it. |
 

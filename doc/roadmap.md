@@ -66,6 +66,14 @@ Implementation and verification details live in
   traces and real-child tests bridge to Rust, without claiming formal
   refinement or unbounded soundness/completeness.
 
+## Implemented, unreleased
+
+- **Diagnostic sessions** — private bounded JSONL traces across input,
+  actions, state, actual rendering, workers, provider traffic, HTTP/cache and
+  CLI lifecycle. `--log-content` explicitly enables sensitive capture.
+  Incomplete logs say so; existing files are never overwritten.
+  [Plan 0030](https://github.com/rootledev/rootle/blob/main/plans/0030-session-diagnostics.md).
+
 ## Next
 
 - **Symbol search** — `␣ s` for symbols: the tree-sitter spike passed
@@ -116,6 +124,9 @@ Implementation and verification details live in
   they are outside the current finite-state model's abstraction.
 - **Pending-key hints** — reconsider a dedicated surface only if the
   sequence vocabulary outgrows the current mode hint strip.
+- **Trace-to-script extraction and provider-result replay** — structured
+  diagnostic recording is implemented; reproducing external service results
+  and timing needs a separate contract, not an implied replay guarantee.
 
 ## Decidedly not
 
