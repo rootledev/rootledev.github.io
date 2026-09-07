@@ -40,6 +40,19 @@ numbered, status in each header.
 - Four-platform releases (linux + macOS, both arches), crates.io,
   homebrew formula + cask, checksum-verified `install.sh`
 
+## Shipped in 0.12.0
+
+[Released 2026-09-08](https://github.com/rootledev/rootle/releases/tag/v0.12.0):
+
+- **Repository history and commit browsing** — `␣ h` opens a repository
+  log without requiring a file preview. Commit files remain beside the
+  message/diff, with `Tab` focus and filtered file stepping.
+- **Syntax-highlighted diffs** — independent old/new hunk fragments use
+  the shared Tree-sitter engine, preserving origin and changed-span tints.
+  Shared preview/prose and viewport components own presentation.
+- **Clean startup and modal prompts** — no seeded repository suggestions
+  for fresh profiles; search fields use `❯` for INSERT and `●` for NORMAL.
+
 ## Shipped in 0.11.0
 
 [Released 2026-09-07](https://github.com/rootledev/rootle/releases/tag/v0.11.0):
@@ -107,14 +120,8 @@ Implementation and verification details live in
   (strop's plan 0010 research): unified + intra-line emphasis carries
   the signal at half the geometry cost; the emphasis engine's run
   pairing is the alignment basis if a split view ever earns itself.
-- **Syntax highlighting inside diff rows** — two virtual files per
-  hunk is real machinery; tints + gutters already carry the scan.
-  Revisits with context folding.
 - **Context folding / gap expanders** — needs per-side fetch-more
   plumbing; follows side-by-side.
-- **Repo-wide history** — the protocol takes `path: none` already;
-  the UI entry point waits for a demand (and brings the commit-graph
-  lanes question with it).
 - **Nerd Font chrome by default** — the powerline modeline is opt-in
   because a terminal can't report its font and tofu-on-first-launch is
   the worst first impression. Open: a reliable probe or a better

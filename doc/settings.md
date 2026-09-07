@@ -71,16 +71,33 @@ overrides win.
 
 ## Commit inspection
 
-`␣ p` focuses the file preview; `h` opens history and `d` inspects its
-selected commit. `Tab` switches between the full message and changed files;
-`j/k` and `gg/G` navigate the focused content. `/` filters files.
-`Enter` opens a unified delta, `]f`/`[f` step files, `h/l` scroll long
-delta lines, and `Y` copies the provider's commit URL when available.
-`Esc` unwinds the delta, detail, history and preview one level at a time.
+Since v0.12.0, select or open a repository and press `␣ h` to
+see its commits at the current branch/tag. `Enter` opens commit detail.
+For a single file, `␣ p` focuses the preview and `h` opens file history;
+`Enter` opens that file at the selected commit, while `d` opens full detail.
+
+The commit's changed files stay on the left, with the full message or
+selected diff on the right. `Enter` opens a file's diff; `Tab` switches
+files/preview focus in either view. Use `j/k` and `gg/G` in the focused
+pane, `/` to filter files, `]f`/`[f` to step matching files, `h/l` to
+scroll a diff horizontally, and `Y` for the provider's commit permalink.
+`Esc` clears a filter, returns from the diff to the message, then unwinds
+to history. Narrow terminals stack the same panes.
+
+Diffs retain add/delete and changed-span background tints under
+Tree-sitter syntax colors. Highlighting uses the available old/new hunk
+fragments; it does not fetch or reconstruct missing whole-file context.
 
 Providers may omit binary or large patches or truncate a file list.
 Those states are labeled; an unavailable patch is not an empty change.
 The viewer is read-only and never stages, commits or reverts code.
+
+### Fresh profiles and input modes
+
+Fresh profiles start with repository search and no seeded organizations
+or repositories. Existing user recents are preserved. Modal search fields
+show `❯` in INSERT and `●` in NORMAL; `Esc` switches to NORMAL and `i`
+returns to INSERT. Transient `/` filters still cancel directly on `Esc`.
 
 ## `[cache]` — content store
 
