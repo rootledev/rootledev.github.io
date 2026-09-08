@@ -30,6 +30,30 @@ install), tracks updates with `rootle provider update` / `upgrade`, and
 
 ![how rootle talks to backends: one seam, github in-tree, anything else as an NDJSON-RPC stdio child](architecture.svg)
 
+## Compatibility: packages, wire major and capabilities
+
+`rootle 0.x.y` and your adapter's version identify different packages.
+The handshake's **`protocol: 1`** is the application wire major;
+**`jsonrpc: "2.0"`** is its envelope. The **v1.6 specification** adds features
+within major 1: it does not ask an adapter to reply with `protocol: 1.6`.
+
+Rootle uses capability flags rather than a negotiated spec minor or a
+rootle/provider package-version range. Defaults: `orgs` and `code_search` are
+true; `file_search` inherits `code_search`; `refs`, `log`, `blame` and `commit`
+are false. Adapter authors should declare capabilities explicitly and publish
+tested binary pairs, runtime/tool requirements and useful help.
+
+A handshake proves neither search credentials/tool availability nor OS
+compatibility. The existing client defaults a missing/malformed protocol field
+to effective major 1, so an accepted `protocol: 1` log is not proof the child
+explicitly declared it. New providers must return integer `1`.
+See the [wire contract](https://github.com/rootledev/rootle/blob/main/doc/provider-protocol.md#handshake).
+
+`rootle provider list --json` reports local installation receipts; it does not
+execute providers or certify their capabilities. Any future live inspection
+must be explicit. A static rootle executable also does not certify its child
+provider's loader, libc, credentials or external tools on another distribution.
+
 ## Point rootle at your backend
 
 ```toml

@@ -40,6 +40,20 @@ numbered, status in each header.
 - Four-platform releases (linux + macOS, both arches), crates.io,
   homebrew formula + cask, checksum-verified `install.sh`
 
+## 0.12.2 — P1 reliability
+
+Implemented and verified in [plan 0031](https://github.com/rootledev/rootle/blob/main/plans/0031-provider-feedback-reliability.md):
+
+- **Machine-readable readiness** — request-scoped tree/search outcomes and
+  explicit counts in headless state; worker completion is not UI acceptance.
+- **Owner-aware startup and status** — no eager organization lookup derived
+  from a repository owner or warm recents, no unrelated 404 over a ready tree.
+  Preserve real user history; fresh and warm profiles remain distinct.
+- **Visible search failures** — durable typed errors, successful-empty versus
+  unavailable distinction, and retained partial results after a failed stream.
+- **Compatibility clarity** — wire major `1`, JSON-RPC envelope `2.0`, additive
+  spec revision `1.6`, and independently versioned rootle/provider packages.
+
 ## Shipped in 0.12.1
 
 [Released 2026-09-08](https://github.com/rootledev/rootle/releases/tag/v0.12.1):
@@ -111,7 +125,7 @@ Implementation and verification details live in
   traces and real-child tests bridge to Rust, without claiming formal
   refinement or unbounded soundness/completeness.
 
-## Next
+## Next — P2 feature work
 
 - **Symbol search** — `␣ s` for symbols: the tree-sitter spike passed
   (320 files/s single-threaded, ~13 MiB on a 908-file corpus), so every
@@ -127,6 +141,27 @@ Implementation and verification details live in
 - **Commit capability across adapters** — extend v1.6 conformance and
   out-of-tree implementations where their backend APIs support detail.
   Unsupported adapters must continue to say so rather than fake a patch.
+
+## Deferred reviewer follow-ups
+
+- **P1, external provider maintainer:** publish tested rootle/provider pairs,
+  required capabilities and runtime/tool dependencies; document personal-owner
+  enumeration and provide useful help. Rootle cannot assert a compatibility
+  range for an uninspected `rootle-bbgithub` release. This does not block core
+  readiness/error-display fixes.
+- **P2, rootle:** explicit opt-in provider inspection with observed protocol and
+  capabilities, declared versus defaulted values, and a reviewed malformed-version
+  admission policy. Plain `provider list --json` stays passive: no surprise child
+  execution, authentication, installation or update.
+- **P2, deployment/provider validation:** run the full pinned pair on RHEL 8.10
+  before claiming support. The supplied evidence covers WSL Ubuntu 24.04 / glibc
+  2.39 only; a static rootle binary does not certify its child provider.
+- **P2, demand-gated UX:** always opening search on warm profiles is separate
+  from fixing owner provenance. Do not erase recents or infer this preference
+  from an empty query.
+- **P3, protocol gate:** package-version/minor-spec negotiation only after a
+  concrete requirement cannot be expressed by wire major and capabilities.
+  No speculative compatibility blacklist or new handshake version.
 
 ## Evaluating
 

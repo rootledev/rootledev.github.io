@@ -1,7 +1,7 @@
 # Your forge (build a provider)
 
 Any system rootle can't reach in-tree wraps as a **child process
-speaking NDJSON-RPC 2.0 over stdio** — the LSP model. Write the
+speaking newline-delimited JSON-RPC 2.0 over stdio** — the LSP model. Write the
 adapter in anything that speaks JSON on pipes; rootle owns the process
 lifecycle (spawn, kill, bounded-backoff respawn) and the protocol
 handles the rest.
@@ -46,6 +46,13 @@ Four methods make a minimal useful provider: `repo/tree`,
 (`org/repos`, `org/url`, `repo/web_url`, `repo/clone_url`,
 `search/code`) layers on top.
 
+`protocol: 1` is the application wire major; JSON-RPC `2.0` is the envelope.
+The additive v1.6 spec does not require a `1.6` handshake value. Package versions
+are separate again: publish tested rootle/adapter pairs and required runtimes,
+credentials and tools rather than inventing a support range from a handshake.
+Declare capabilities explicitly: orgs/code-search default true, file-search
+inherits code-search, and refs/log/blame/commit default false.
+
 ## The contract highlights
 
 - **Content ids, not shas**: every `sha` is an opaque id that MUST
@@ -62,19 +69,20 @@ Four methods make a minimal useful provider: `repo/tree`,
   filename search yes, content search no).
 - **Honest errors**: `data.kind` taxonomy — `auth`,
   `rate_limited` (+ `retry_after_s`), `not_found`, `network`,
-  `timeout`, `provider`. Unknown kinds degrade to a toast, never a
-  crash.
+  `timeout`, `provider`. Unknown kinds map to `other` without losing the message.
+  Search failures remain visible beside retained partial results; they are not
+  a successful empty result.
 
 ## The spec and the gate
 
 The normative wire format lives in
 [`doc/provider-protocol.md`](https://github.com/rootledev/rootle/blob/main/doc/provider-protocol.md)
-(v1.4). The [scaffolding
+(v1.6). The [scaffolding
 skill](https://github.com/rootledev/rootle/tree/main/skills/rootle-provider)
 walks you through the capability questionnaire, and the canonical
 [forge-conformance](https://github.com/rootledev/forge-conformance)
-suite is the integration gate — every protocol gotcha as a numbered,
-citable case (FC-001..080) against a deterministic fixture. It is the
+suite is the integration gate — protocol edge cases against deterministic
+fixtures. A conformance pass does not certify target-OS or external-tool support. It is the
 same gate rootle-gitlab and rootle-bitbucket run in their own CI.
 
 Real out-of-tree providers to read: [rootle-gitlab](https://github.com/rootledev/rootle-gitlab)

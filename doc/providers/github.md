@@ -12,8 +12,8 @@ rootle finds your GitHub credentials through this chain, in order:
 2. **`GITHUB_TOKEN`** env var — same token shape, CI-friendly name
 3. **`gh auth login`** — if the [GitHub CLI](https://cli.github.com/) is
    authenticated, rootle uses its stored token automatically
-4. **anonymous** — works everywhere except code search (rootle says so
-   in the status line when it matters)
+4. **anonymous** — public repository browsing; global code search requires
+   authentication and failures remain visible in the search result pane
 
 The fastest path for most people:
 
@@ -32,12 +32,12 @@ rootle
 
 ## What works
 
-- **Browse** — orgs → repos → trees → files, live syntax-highlighted preview
+- **Browse** — owners → repos → trees → files, live syntax-highlighted preview
 - **Find** (`␣ f`) and **grep** (`␣ g`) — Zed-style full-screen search
 - **Open** any file read-only in your editor (`Enter`)
 - **Yank** browser URLs (`␣ y`)
 - **Clone** through the wizard (`v` marks, `:clone`)
-- **Code search** requires authentication (anonymous gets everything else);
+- **Global code search** requires authentication;
   syntax: [GitHub's code-search
   syntax](https://docs.github.com/en/search-github/github-code-search/understanding-github-code-search-syntax)
   plus rootle's own grammar (quoted literals, `-` negation,
@@ -45,8 +45,19 @@ rootle
   or low-activity repos aren't in GitHub's index: a scoped grep there
   gets a local tarball grep (0.8.4+) instead of a quiet zero
 
+## Personal accounts and saved owners
+
+`rootle owner/repo` loads that repository directly; it does not infer that
+`owner` is an organization. Saved legacy owner names remain available without
+an eager organization lookup on launch. Fresh profiles open repository search;
+warm profiles retain their browsing history.
+
+When you explicitly open an owner's repository list, the built-in backend
+resolves GitHub's account type and uses the personal-account or organization
+endpoint. Genuine authentication, rate-limit and not-found errors remain errors.
+
 ## GitHub Enterprise
 
-Set `ROOTLE_TOKEN` to a GHES PAT and point rootle at your instance —
-the API base is derived from the token's scope. For full GHES support
-or a different forge, write a [stdio provider](provider-protocol.html).
+The built-in backend currently targets `api.github.com`; a token does not select
+another API host. For GHES, use a [stdio provider](../provider-protocol.html)
+configured for your instance.
