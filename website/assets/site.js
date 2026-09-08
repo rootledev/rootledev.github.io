@@ -52,7 +52,7 @@
     curl: {
       cmd: "curl -fsSL https://rootle.dev/install.sh | sh",
       note: "prebuilt binary \u00b7 x86_64 + arm64 \u00b7 " + RELEASES,
-      update: "rootle update",
+      update: "rootle self-update",
     },
     brew: IS_MAC
       ? {
