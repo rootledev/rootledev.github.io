@@ -32,13 +32,27 @@ numbered, status in each header.
   (counts, `gg`/`G`, pages, paragraphs, `%`, `zt/zz/zb`, `:<line>`)
 - A state-only modeline with a `? keys` affordance; transient modes get
   a glued hint strip — one hint surface per context
-- `rootle update` self-updates tarball installs (checksum-verified,
+- `rootle self-update` updates tarball installs (checksum-verified,
   atomic); the modeline chips `↑ vX.Y.Z` when a newer release exists;
   CHANGELOG.md rides every release from 0.8.0
 - [forge-conformance](https://github.com/rootledev/forge-conformance):
   numbered protocol cases — all three providers run it in CI
 - Four-platform releases (linux + macOS, both arches), crates.io,
   homebrew formula + cask, checksum-verified `install.sh`
+
+## Shipped in 0.12.1
+
+[Released 2026-09-08](https://github.com/rootledev/rootle/releases/tag/v0.12.1):
+
+- **Explicit updater ownership** — application-only `self-update`,
+  combined `update`, and real `provider …` command nesting.
+- **Focused diff controls** — `/` and `n/N` search the diff; `y` creates
+  side-correct line links and `Y` copies source text. Page keys and help
+  work without silently switching to the sidebar.
+- **One commit-detail key** — `d` in either history scope; file-history
+  Enter keeps its distinct open-file-at-revision operation.
+- **Changed-file hierarchy** — expanded directory headings, stable
+  selectable leaves, and filters that keep ancestors and renamed paths.
 
 ## Shipped in 0.12.0
 

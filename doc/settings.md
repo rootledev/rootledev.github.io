@@ -71,18 +71,33 @@ overrides win.
 
 ## Commit inspection
 
-Since v0.12.0, select or open a repository and press `␣ h` to
-see its commits at the current branch/tag. `Enter` opens commit detail.
-For a single file, `␣ p` focuses the preview and `h` opens file history;
-`Enter` opens that file at the selected commit, while `d` opens full detail.
+Select or open a repository and press `␣ h` to see its commits at the
+current branch/tag. **`d` opens commit detail** in both repository and file
+history. For a single file, `␣ p` focuses the preview and `h` opens history;
+`Enter` there opens the file at the selected commit, not commit detail.
 
-The commit's changed files stay on the left, with the full message or
-selected diff on the right. `Enter` opens a file's diff; `Tab` switches
-files/preview focus in either view. Use `j/k` and `gg/G` in the focused
-pane, `/` to filter files, `]f`/`[f` to step matching files, `h/l` to
-scroll a diff horizontally, and `Y` for the provider's commit permalink.
-`Esc` clears a filter, returns from the diff to the message, then unwinds
-to history. Narrow terminals stack the same panes.
+The changed files form an expanded directory hierarchy on the left.
+Directory headings are not selectable; `j/k` and `]f`/`[f` move between
+matching file leaves. `Enter` opens the selected diff and focuses it.
+`Tab` switches between files and preview; narrow terminals stack the panes.
+
+Commands follow the focused pane:
+
+| Key | Files | Diff preview | Message preview |
+|---|---|---|---|
+| `/` | Filter full paths, old rename paths and status | Incremental literal, case-insensitive find | — |
+| `n` / `N` | — | Next / previous match, wrapping | — |
+| `y` | Commit permalink | Revision-pinned source-line link; headers use the commit link | Commit permalink |
+| `Y` | — | Copy the source line, without diff gutters | Copy the full message |
+| `h` / `l` | — | Horizontal scrolling | — |
+| `Ctrl-d/u`, `Ctrl-f/b`, Page Down/Up | — | Half/full-page movement | Half/full-page scrolling |
+| `?` | Keybinding catalog | Keybinding catalog | Keybinding catalog |
+
+Deleted-line links use the first parent revision and the old rename path.
+Links require provider support; unavailable links report an error rather
+than inventing a URL. `Esc` cancels a find edit or clears committed find
+highlights before closing the diff; sidebar filters clear while the sidebar
+owns focus. Further `Esc` presses unwind to history and the browser.
 
 Diffs retain add/delete and changed-span background tints under
 Tree-sitter syntax colors. Highlighting uses the available old/new hunk
@@ -164,6 +179,28 @@ This supplies evidence for investigation, not deterministic remote replay.
 | `ROOTLE_TRACE` | Path for a new private JSONL diagnostic session; existing files are refused. |
 | `ROOTLE_HEADLESS_COLS`, `ROOTLE_HEADLESS_ROWS` | `--headless` viewport (default 100×30). |
 | `NO_COLOR` | Ignored by the full-screen TUI, whose colors are semantic. Provider-management and update CLI output honor it. |
+
+## Updating rootle
+
+Since v0.12.1, application and provider commands have explicit ownership:
+
+```sh
+rootle self-update          # application only
+rootle self-update --check  # report without replacing the executable
+rootle update               # application, then managed providers
+rootle provider update      # refresh provider version metadata
+rootle provider upgrade --all
+```
+
+Tarball/install.sh installations replace rootle after checksum verification.
+Homebrew, Cargo and mise installations receive their package manager's
+upgrade command instead.
+
+**Upgrading a v0.12.0 tarball:** run `rootle --update` once. That release's
+`rootle update` incorrectly selected provider maintenance; the long flag
+reaches its existing application updater. `self-update` is available after
+installing v0.12.1. Package-managed users should use their normal upgrade
+command, such as `brew upgrade rootle` or `cargo install rootle --locked`.
 
 ## Command line
 
