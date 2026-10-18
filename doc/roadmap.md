@@ -6,6 +6,12 @@ code wherever it lives. The plan documents live in the app repo under
 [`plans/`](https://github.com/rootledev/rootle/tree/main/plans) —
 numbered, status in each header.
 
+Active platform support is Linux / WSL x86_64 only; the prebuilt target is
+`x86_64-unknown-linux-musl`. ARM, macOS and native Windows are unsupported.
+The Homebrew source formula is Linux x86_64 only and the macOS cask is
+retired. Platform counts in past release sections below describe history,
+not current support; published release assets remain unchanged.
+
 ## Shipped
 
 - The core browser: orgs → repos → trees in miller columns, syntax-
@@ -37,8 +43,8 @@ numbered, status in each header.
   CHANGELOG.md rides every release from 0.8.0
 - [forge-conformance](https://github.com/rootledev/forge-conformance):
   numbered protocol cases — all three providers run it in CI
-- Four-platform releases (linux + macOS, both arches), crates.io,
-  homebrew formula + cask, checksum-verified `install.sh`
+- Linux / WSL x86_64 installs: static musl tarball, crates.io,
+  Homebrew source formula, checksum-verified `install.sh`
 
 ## 0.12.2 — P1 reliability
 

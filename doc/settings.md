@@ -182,6 +182,11 @@ This supplies evidence for investigation, not deterministic remote replay.
 
 ## Updating rootle
 
+Active installs and updates support Linux / WSL x86_64 only. The prebuilt
+target is `x86_64-unknown-linux-musl`; ARM, macOS and native Windows are
+unsupported. Homebrew uses the Linux x86_64 source formula, not a cask.
+Previously published release assets remain available as history.
+
 Since v0.12.1, application and provider commands have explicit ownership:
 
 ```sh

@@ -3,7 +3,9 @@ name: pages
 # rootle.dev — assembled by website/build.py from THIS repo: the
 # landing page from website/, docs pages from doc/*.md, demo GIFs from
 # img/. The app repo (rootledev/rootle) is checked out at code/ for the
-# version stamp and install.sh.
+# version stamp and install.sh. Active consumers are Linux / WSL x86_64
+# only; deploy only after the app's Linux-only installer lands on its
+# default branch. The installer is copied from code/, never forked here.
 on:
   workflow_dispatch:
   # The app repo's release/demo workflows ping us to redeploy (version
@@ -30,7 +32,7 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}

@@ -44,39 +44,27 @@
   apply(stored);
 
   // ---- hero installer: one command box, method pills swap it ----
-  var IS_MAC = /mac/i.test((navigator.platform || "") + " " + (navigator.userAgent || ""));
   var RELEASES = '<a href="https://github.com/rootledev/rootle/releases">tarballs \u2197</a>';
-  var BREW_CASK = "brew install --cask rootledev/tap/rootle";
   var BREW_SRC = "brew install rootledev/tap/rootle";
   var INSTALLS = {
     curl: {
       cmd: "curl -fsSL https://rootle.dev/install.sh | sh",
-      note: "prebuilt binary \u00b7 x86_64 + arm64 \u00b7 " + RELEASES,
+      note: "prebuilt binary \u00b7 x86_64-unknown-linux-musl \u00b7 sha256-verified \u00b7 " + RELEASES,
       update: "rootle self-update",
     },
-    brew: IS_MAC
-      ? {
-          cmd: BREW_CASK,
-          note:
-            'homebrew cask \u2014 prebuilt \u00b7 linux: <button class="inline-copy" data-copy="' +
-            BREW_SRC + '"><code>' + BREW_SRC + "</code></button> (from source)",
-          update: "brew upgrade --cask rootledev/tap/rootle",
-        }
-      : {
-          cmd: BREW_SRC,
-          note:
-            'homebrew formula \u2014 builds from source \u00b7 macOS: <button class="inline-copy" data-copy="' +
-            BREW_CASK + '"><code>' + BREW_CASK + "</code></button> (prebuilt cask)",
-          update: "brew upgrade rootledev/tap/rootle",
-        },
+    brew: {
+      cmd: BREW_SRC,
+      note: "homebrew formula \u2014 builds from source \u00b7 Linux / WSL x86_64 only",
+      update: "brew upgrade rootledev/tap/rootle",
+    },
     cargo: {
       cmd: "cargo install rootle",
-      note: "from crates.io \u2014 builds from source \u00b7 needs a rust toolchain",
+      note: "from crates.io \u2014 builds from source \u00b7 Linux / WSL x86_64 only \u00b7 needs a rust toolchain",
       update: "cargo install rootle",
     },
     mise: {
       cmd: "mise use cargo:rootle",
-      note: "pinned per-project via mise\u2019s cargo backend \u00b7 " + RELEASES,
+      note: "pinned per-project via mise\u2019s cargo backend \u00b7 Linux / WSL x86_64 only",
       update: "mise up rootle",
     },
   };

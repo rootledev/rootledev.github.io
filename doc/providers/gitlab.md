@@ -19,7 +19,9 @@ cargo install rootle-gitlab
 ```
 
 Or grab a [prebuilt binary](https://github.com/rootledev/rootle-gitlab/releases)
-(linux + macOS, x86_64 + aarch64) and put it on your PATH.
+for `x86_64-unknown-linux-musl` and put it on your PATH. Active Rootle
+support is Linux / WSL x86_64 only; other historical provider assets do
+not expand that support policy.
 
 ## Authentication
 
