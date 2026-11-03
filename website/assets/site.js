@@ -23,15 +23,16 @@
     // dots is otherwise invisible ("why is the site golden?").
     var labels = document.querySelectorAll("[data-palette-name]");
     for (var j = 0; j < labels.length; j++) {
-      labels[j].textContent = name || DEFAULT;
+      labels[j].textContent = name === "paper-dark" ? "Paper Dark" : name || DEFAULT;
     }
-    // Swap the demo GIF to the palette's render (built per-theme by the
-    // demo workflow); fall back to the canonical GIF until they exist.
+    // Swap existing app palettes to their recordings. Paper Dark is
+    // website-only and deliberately keeps the canonical Mocha recording.
     var demo = document.querySelector("[data-demo-img]");
     if (demo) {
       var canonical = "./assets/demo.gif";
       var themed =
-        name && name !== DEFAULT ? "./assets/img/demo-" + name + ".gif" : canonical;
+        name && name !== DEFAULT && name !== "paper-dark"
+          ? "./assets/img/demo-" + name + ".gif" : canonical;
       demo.onerror = function () {
         if (demo.getAttribute("src") !== canonical) demo.src = canonical;
       };

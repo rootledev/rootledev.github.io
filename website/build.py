@@ -161,6 +161,7 @@ PALETTE_DOTS = [
     ("github-light", "#0969da"),
     ("one-light", "#4078f2"),
     ("solarized-light", "#268bd2"),
+    ("paper-dark", "#9bc7ac"),
 ]
 
 
@@ -180,8 +181,8 @@ def rail(active: str, toc: list[tuple[str, str]], prefix: str = "../") -> str:
         else ""
     )
     dots = "".join(
-        f'    <button data-set-palette="{name}" title="{name}" '
-        f'style="--sw:{color}" aria-label="{name}"></button>\n'
+        f'    <button data-set-palette="{name}" title="{"Paper Dark" if name == "paper-dark" else name}" '
+        f'style="--sw:{color}" aria-label="{"Paper Dark" if name == "paper-dark" else name}"></button>\n'
         for name, color in PALETTE_DOTS
     )
     return f"""<aside class="rail">
