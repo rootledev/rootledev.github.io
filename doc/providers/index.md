@@ -21,17 +21,24 @@ and its Python siblings serving directories and Git worktrees) is the worked exa
 
 ## Search syntax
 
-The query grammar is rootle's own and the same on every forge —
-quoted literals, negation, qualifiers:
+Query tokenization and language aliases follow Strop. Rootle retains its
+forge-oriented literal/negation syntax; it does not implement Strop's regex or
+Boolean expression language. Quoted values and escapes preserve term boundaries.
 
 | You type | It means |
 | --- | --- |
 | `handle_request` | the term, case-insensitive |
 | `"exact phrase"` | one literal — spaces don't split it |
-| `struct -derive` / `struct -NOT json` | subtract the term (client-side honesty chip when the backend can't negate natively) |
-| `language:rs` | files of that language only |
+| `struct -derive` / `struct NOT json` | subtract a term |
+| `language:cpp` / `language:c++` | the same C++ language family, including `.cpp`, `.cc` and `.cxx` |
+| `language:rust language:python` | either language; negative language qualifiers exclude |
 | `extension:toml` | or use the extension field — same thing |
 
+
+Malformed quotes, empty qualifier values and unknown languages report query
+errors rather than quietly widening the search. File find lowers free filename
+terms to `path:` while retaining qualifiers; grep forwards the original query
+with its selected scope. Backend-only limitations remain visible.
 The fields row carries scope (global · org · repo) and extension;
 facet chips under it filter by repo/language as results stream.
 Scoped greps run against the forge's index first; when the index

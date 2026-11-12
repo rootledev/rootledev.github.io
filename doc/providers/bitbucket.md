@@ -94,7 +94,7 @@ file" case; open the file and use find-in-file (`␣ /`) for content.
 
 Everything the manager does, by hand: `cargo install rootle-bitbucket`
 (or a [prebuilt binary](https://github.com/rootledev/rootle-bitbucket/releases),
-linux + macOS, x86_64 + aarch64), then `~/.config/rootle/config.toml`:
+selecting Linux x86_64 or aarch64), then `~/.config/rootle/config.toml`:
 
 ```toml
 [provider]

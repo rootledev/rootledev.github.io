@@ -18,7 +18,7 @@ args = []               # list of strings
 read_only = true        # boolean
 
 [theme]
-name = "catppuccin-mocha"   # string
+name = "hone"              # string; explicit existing choices are preserved
 # path = "/abs/or/~/theme.toml"   # string, optional — overrides name
 
 [cache]
@@ -47,7 +47,7 @@ return.
 
 | Key | Type | Default | Meaning |
 |---|---|---|---|
-| `name` | string | `"catppuccin-mocha"` | Palette to load. Embedded dark: `catppuccin-mocha`, `dracula`, `gruvbox-dark`, `nord`, `one-dark`, `solarized-dark`, `tokyo-night`. Embedded light: `catppuccin-latte`, `github-light`, `one-light`, `solarized-light`. Unknown name → Catppuccin Mocha. |
+| `name` | string | `"hone"` | Palette to load. Strop originals: `hone`, `slate`, `carbide`, `vellum`, `paper`, `paper-dark`. Previous dark palettes: `catppuccin-mocha`, `dracula`, `gruvbox-dark`, `nord`, `one-dark`, `solarized-dark`, `tokyo-night`. Previous light palettes: `catppuccin-latte`, `github-light`, `one-light`, `solarized-light`. Unknown name → Hone. |
 | `path` | string, optional | unset | Explicit palette file; wins over `name`. |
 
 `--theme NAME` (CLI) overrides `name` for one session. To write your
@@ -193,14 +193,15 @@ rootle provider upgrade --all
 ```
 
 Tarball/install.sh installations replace rootle after checksum verification.
-Homebrew, Cargo and mise installations receive their package manager's
-upgrade command instead.
+Cargo and mise installations receive their package manager's upgrade command.
+Starting with v0.13.0, rootle supports Linux x86_64 and arm64 only;
+macOS artifacts and the Homebrew tap are no longer maintained.
 
 **Upgrading a v0.12.0 tarball:** run `rootle --update` once. That release's
 `rootle update` incorrectly selected provider maintenance; the long flag
 reaches its existing application updater. `self-update` is available after
 installing v0.12.1. Package-managed users should use their normal upgrade
-command, such as `brew upgrade rootle` or `cargo install rootle --locked`.
+command, such as `cargo install rootle --locked`.
 
 ## Command line
 

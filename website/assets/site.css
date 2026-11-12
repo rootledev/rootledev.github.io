@@ -1,14 +1,48 @@
 /* rootle site styles — every page shares one chrome: a left rail
    (brand, site nav, on-this-page TOC on docs) and a content column.
    Landing page: website/index.html. Docs pages: built from doc/*.md by
-   website/build.py. Catppuccin Mocha. */
+   website/build.py. Hone is the default. */
 :root {
+  color-scheme: dark;
+  --bg: #15171c; --card: #1c1f25; --deep: #15171c;
+  --border: #23272f; --border-strong: #4a5160; --text: #e6e1d6; --dim: #a8adb8; --faint: #858c9a;
+  --blue: #e8a848; --green: #aec37f; --yellow: #d9a85a; --peach: #e39a7b;
+  --red: #e8707c; --mauve: #c99ce0; --teal: #6fb8c4;
+  --subtext0: var(--dim);
+  --mono: ui-monospace, "DejaVu Sans Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+html[data-palette="catppuccin-mocha"] {
   --bg: #11111b; --card: #1e1e2e; --deep: #181825;
   --border: #313244; --border-strong: #585b70; --text: #cdd6f4; --dim: #a6adc8; --faint: #6c7086;
   --blue: #89b4fa; --green: #a6e3a1; --yellow: #f9e2af; --peach: #fab387;
   --red: #f38ba8; --mauve: #cba6f7; --teal: #94e2d5;
-  --mono: ui-monospace, "DejaVu Sans Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+html[data-palette="slate"] {
+  --bg: #1a1c20; --card: #202329; --deep: #1a1c20;
+  --border: #272b32; --border-strong: #545962; --text: #dcd9d2; --dim: #aeb1b7; --faint: #858a93;
+  --blue: #c9b27e; --green: #b9c3a6; --yellow: #cfb27a; --peach: #cdb6a3;
+  --red: #d98a90; --mauve: #c9b27e; --teal: #93b7bd;
+}
+html[data-palette="carbide"] {
+  --bg: #0b0c0f; --card: #14161b; --deep: #0b0c0f;
+  --border: #1d2027; --border-strong: #6a7280; --text: #f4f2ec; --dim: #cfd3da; --faint: #a3a9b4;
+  --blue: #ffb74a; --green: #c3e088; --yellow: #f0c060; --peach: #ffa98c;
+  --red: #ff7b86; --mauve: #dcb0ff; --teal: #7fd6e4;
+}
+html[data-palette="vellum"] {
+  color-scheme: light;
+  --bg: #f6f2e9; --card: #fdfbf6; --deep: #f6f2e9;
+  --border: #e5dfd0; --border-strong: #aeb3ba; --text: #262a30; --dim: #4b525c; --faint: #656d7b;
+  --blue: #8a510f; --green: #4e6f22; --yellow: #8a5d13; --peach: #9c4a22;
+  --red: #b8323f; --mauve: #6f3aa8; --teal: #1f6f7a;
+}
+html[data-palette="paper"] {
+  color-scheme: light;
+  --bg: #f8f8f3; --card: #eef1e8; --deep: #f8f8f3;
+  --border: #dbe2d6; --border-strong: #a9b8a8; --text: #20362d; --dim: #3a4d43; --faint: #475951;
+  --blue: #1a6650; --green: #526e38; --yellow: #7c5a20; --peach: #92592f;
+  --red: #9c3f38; --mauve: #78618e; --teal: #25677a;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -613,11 +647,11 @@ html[data-palette="solarized-light"] {
   --teal: #2aa198;
 }
 
-/* Website-only companion palette; app recordings retain their own colors. */
+/* Paper Dark shares the app's semantic palette. */
 html[data-palette="paper-dark"] {
   color-scheme: dark;
-  --bg: #151d19; --card: #1c2720; --deep: #111914;
-  --border: #35473b; --border-strong: #53695b;
+  --bg: #151d19; --card: #1c2720; --deep: #151d19;
+  --border: #243229; --border-strong: #53695b;
   --text: #e3e9dd; --dim: #bfccbe; --faint: #9daa9e; --subtext0: #bfccbe;
   --blue: #9bc7ac; --green: #a8bb87; --yellow: #d3b477; --peach: #cea989;
   --red: #df9992; --mauve: #b7a6c9; --teal: #9abac5;

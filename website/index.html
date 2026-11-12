@@ -41,11 +41,11 @@
   </div>
   <div class="installbox">
     <span class="tab-bar">
-      <button data-install="curl" class="active" aria-pressed="true">curl</button><button data-install="brew" aria-pressed="false">brew</button><button data-install="cargo" aria-pressed="false">cargo</button><button data-install="mise" aria-pressed="false">mise</button>
+      <button data-install="curl" class="active" aria-pressed="true">curl</button><button data-install="cargo" aria-pressed="false">cargo</button><button data-install="mise" aria-pressed="false">mise</button>
     </span>
     <span class="ib-cmd"><span class="p">$</span> <span data-install-cmd>curl -fsSL https://rootle.dev/install.sh | sh</span></span>
     <button class="copy" data-install-copy data-copy="curl -fsSL https://rootle.dev/install.sh | sh" data-copy-label>copy</button>
-    <span class="ib-os">linux · macOS</span>
+    <span class="ib-os">linux · x86_64 + arm64</span>
   </div>
   <p class="alt update-line">already installed? <code data-install-update>rootle self-update</code> · the modeline chimes when a release lands · <a href="./changelog/">what's new</a></p>
   <p class="alt">upgrading a v0.12.0 tarball? run <code>rootle --update</code> once · <a href="./docs/settings.html#updating-rootle">update guide</a></p>
@@ -54,7 +54,7 @@
     <a class="primary" href="https://github.com/rootledev/rootle">GitHub ↗</a>
   </div>
   <div class="steps">
-    <div class="step"><b>[01]</b><h3>install</h3><p>one static binary — the box above covers curl, brew, cargo, mise.</p></div>
+    <div class="step"><b>[01]</b><h3>install</h3><p>one static Linux binary — curl, cargo, or mise. Releases are qualified on our local Buildbot.</p></div>
     <div class="step"><b>[02]</b><h3>auth</h3><p><code>gh auth login</code> covers GitHub; everything else is one env var — tokens stay in your environment, rootle never sees provider auth.</p></div>
     <div class="step"><b>[03]</b><h3>run</h3><p><code>rootle</code> opens repo search; <code>rootle owner/repo</code> jumps straight in; <code>@branch</code> pins a revision.</p></div>
     <div class="step"><b>[04]</b><h3>beyond github</h3><p><code>rootle provider install gitlab</code> — checksum-verified, 30 seconds. have an internal forge? <a href="./docs/providers/your-forge.html">four methods add it</a>. declare it once, and updates ride <code>rootle update</code>.</p></div>
@@ -64,7 +64,12 @@
 <section class="demo">
   <h2 class="section">watch the workflow — then pick a palette</h2>
   <div class="palette-bar">
-    <button data-set-palette="catppuccin-mocha" class="active"><span class="sw" style="--sw:#89b4fa"></span>catppuccin-mocha</button>
+    <button data-set-palette="hone" class="active"><span class="sw" style="--sw:#e8a848"></span>hone</button>
+    <button data-set-palette="slate"><span class="sw" style="--sw:#c9b27e"></span>slate</button>
+    <button data-set-palette="carbide"><span class="sw" style="--sw:#ffb74a"></span>carbide</button>
+    <button data-set-palette="vellum"><span class="sw" style="--sw:#8a510f"></span>vellum</button>
+    <button data-set-palette="paper"><span class="sw" style="--sw:#1a6650"></span>paper</button>
+    <button data-set-palette="catppuccin-mocha"><span class="sw" style="--sw:#89b4fa"></span>catppuccin-mocha</button>
     <button data-set-palette="dracula"><span class="sw" style="--sw:#bd93f9"></span>dracula</button>
     <button data-set-palette="gruvbox-dark"><span class="sw" style="--sw:#83a598"></span>gruvbox-dark</button>
     <button data-set-palette="nord"><span class="sw" style="--sw:#88c0d0"></span>nord</button>
@@ -81,9 +86,9 @@
     <div class="titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="wtitle">rootle v<!--VERSION--> · press ? for keybindings</span></div>
     <img data-demo-img src="./assets/demo.gif" alt="rootle demo: searching, browsing miller columns, grep, yanking a URL">
   </div>
-  <p class="note">The eleven app palettes switch to their matching recordings.
-  Paper Dark styles this website only and keeps the Catppuccin Mocha recording;
-  it is not an app theme. First launch opens repo search;
+  <p class="note">Seventeen app palettes, including Strop's Hone, Slate, Carbide,
+  Vellum, Paper and Paper Dark. Hone is the default; your existing palette stays
+  yours. First launch opens repo search;
   <code>rootle owner/repo</code> jumps straight into a repo.</p>
 </section>
 
@@ -228,7 +233,7 @@
   <a href="https://github.com/rootledev">rootledev</a>
   <a href="https://github.com/rootledev/rootle">source</a>
   <a href="./docs/settings.html">docs</a>
-  <span style="margin-left:auto"><span class="fversion">v<!--VERSION--></span> · a ratatui TUI · eleven palettes</span>
+  <span style="margin-left:auto"><span class="fversion">v<!--VERSION--></span> · a ratatui TUI · seventeen palettes</span>
 </footer>
 
 </main>
