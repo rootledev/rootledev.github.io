@@ -40,7 +40,7 @@ numbered, status in each header.
 - Static Linux x86_64 and arm64 releases, crates.io and checksum-verified
   `install.sh`; local Buildbot qualification binds artifacts to source and gates
 
-## 0.13.0 — verified request lifetimes and Linux delivery
+## 0.13.1 — verified request lifetimes and Linux delivery
 
 - A small Rust kernel decides generation advancement and reply acceptance.
   Lean checks its Charon/Aeneas translation; extraction drift, axiom auditing
