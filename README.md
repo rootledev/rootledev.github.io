@@ -24,6 +24,6 @@ them.
 Website palettes live in `website/assets/site.css`, with controls in
 `website/index.html` and `PALETTE_DOTS` in `website/build.py`. The shared
 `site.js` persists the `rootle-palette` choice across home and docs;
-Catppuccin Mocha remains the default. Paper Dark (`paper-dark`) is a
-website-only option, not an app theme. It uses the existing canonical
-Mocha demo recording without recoloring it or requesting a new GIF.
+Hone is the default. All seventeen palettes, including Strop's Hone, Slate,
+Carbide, Vellum, Paper and Paper Dark, are also selectable in the app.
+Each palette has its own recording; `demo.gif` is Hone.

@@ -34,8 +34,8 @@ install), tracks updates with `rootle provider update` / `upgrade`, and
 
 `rootle 0.x.y` and your adapter's version identify different packages.
 The handshake's **`protocol: 1`** is the application wire major;
-**`jsonrpc: "2.0"`** is its envelope. The **v1.6 specification** adds features
-within major 1: it does not ask an adapter to reply with `protocol: 1.6`.
+**`jsonrpc: "2.0"`** is its envelope. The **v1.7 specification** adds features
+within major 1: it does not ask an adapter to reply with `protocol: 1.7`.
 
 Rootle uses capability flags rather than a negotiated spec minor or a
 rootle/provider package-version range. Defaults: `orgs` and `code_search` are
@@ -97,6 +97,11 @@ adapter may emit `$/partial` notifications carrying batches of items —
 results render in the TUI as they arrive. The final reply is then
 metadata-only (`items: []` + `truncated`). The reference adapter
 streams per repo; the deadline is per-inactivity while you stream.
+
+`repo/log` can use the same stream envelope from v1.7. Rootle accepts older
+single-result adapters too, keeps at most 500 newest commits, and preserves
+partial history with an incomplete marker after failure. GitHub history now
+pages past the former 99-commit ceiling, pinned to one revision.
 
 ## Process lifecycle — what rootle assumes about your adapter
 

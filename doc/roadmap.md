@@ -17,8 +17,8 @@ numbered, status in each header.
   at the match line, and facet by repo/language
 - The clone wizard: VISUAL multi-select, org expansion, archived repos
   greyed, sorted by last push (protocol v1.4)
-- Eleven palettes with a picker, `[ui] border` shapes, optional
-  Nerd Font powerline chrome, hot-reloading `:settings`
+- Seventeen palettes with a picker, including Strop's Hone default;
+  `[ui] border` shapes, optional Nerd Font chrome, hot-reloading `:settings`
 - Providers: GitHub in-tree; GitLab and Bitbucket as managed one-binary
   adapters speaking NDJSON-RPC over stdio, with capability negotiation,
   streaming, honesty chips and structured errors
@@ -37,8 +37,22 @@ numbered, status in each header.
   CHANGELOG.md rides every release from 0.8.0
 - [forge-conformance](https://github.com/rootledev/forge-conformance):
   numbered protocol cases — all three providers run it in CI
-- Four-platform releases (linux + macOS, both arches), crates.io,
-  homebrew formula + cask, checksum-verified `install.sh`
+- Static Linux x86_64 and arm64 releases, crates.io and checksum-verified
+  `install.sh`; local Buildbot qualification binds artifacts to source and gates
+
+## 0.13.0 — verified request lifetimes and Linux delivery
+
+- A small Rust kernel decides generation advancement and reply acceptance.
+  Lean checks its Charon/Aeneas translation; extraction drift, axiom auditing
+  and deliberate faulty variants are part of release qualification.
+- History streams past the old 99-commit ceiling, up to 500 newest commits.
+  Partial entries remain visible on failure; truncation is explicit.
+  TLA+ checks bounded history safety and fairness-qualified progress.
+- Language aliases and query tokenization follow Strop; `language:cpp` and
+  `language:c++` share one catalog with local find, grep and highlighting.
+- Hone, Slate, Carbide, Vellum, Paper and Paper Dark join the existing palettes.
+- macOS and Homebrew distribution end here. Linux releases are qualified
+  locally with Docker Compose, then explicitly published.
 
 ## 0.12.2 — P1 reliability
 

@@ -150,6 +150,11 @@ def themed_logo() -> str:
 # Palette dots in the docs rail: name + accent color (border_focused),
 # mirroring the landing's picker so themes are switchable from any page.
 PALETTE_DOTS = [
+    ("hone", "#e8a848"),
+    ("slate", "#c9b27e"),
+    ("carbide", "#ffb74a"),
+    ("vellum", "#8a510f"),
+    ("paper", "#1a6650"),
     ("catppuccin-mocha", "#89b4fa"),
     ("dracula", "#bd93f9"),
     ("gruvbox-dark", "#83a598"),
@@ -196,7 +201,7 @@ def rail(active: str, toc: list[tuple[str, str]], prefix: str = "../") -> str:
 {toc_block}  <span class="rail-head">theme</span>
   <div class="rail-palettes">
 {dots}  </div>
-  <span class="palette-name" data-palette-name>catppuccin-mocha</span>
+  <span class="palette-name" data-palette-name>hone</span>
 </aside>"""
 
 
@@ -225,7 +230,7 @@ def page(title: str, body: str, active: str, toc: list[tuple[str, str]], prefix:
   <a href="https://github.com/rootledev">rootledev</a>
   <a href="{REPO}">source</a>
   <a href="{prefix}index.html">home</a>
-  <span style="margin-left:auto"><span class="fversion">v{app_version()}</span> · a ratatui TUI · eleven palettes</span>
+  <span style="margin-left:auto"><span class="fversion">v{app_version()}</span> · a ratatui TUI · seventeen palettes</span>
 </footer>
 </main>
 </div>

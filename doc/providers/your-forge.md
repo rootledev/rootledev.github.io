@@ -47,7 +47,7 @@ Four methods make a minimal useful provider: `repo/tree`,
 `search/code`) layers on top.
 
 `protocol: 1` is the application wire major; JSON-RPC `2.0` is the envelope.
-The additive v1.6 spec does not require a `1.6` handshake value. Package versions
+The additive v1.7 spec does not require a `1.7` handshake value. Package versions
 are separate again: publish tested rootle/adapter pairs and required runtimes,
 credentials and tools rather than inventing a support range from a handshake.
 Declare capabilities explicitly: orgs/code-search default true, file-search
@@ -77,7 +77,7 @@ inherits code-search, and refs/log/blame/commit default false.
 
 The normative wire format lives in
 [`doc/provider-protocol.md`](https://github.com/rootledev/rootle/blob/main/doc/provider-protocol.md)
-(v1.6). The [scaffolding
+(v1.7). The [scaffolding
 skill](https://github.com/rootledev/rootle/tree/main/skills/rootle-provider)
 walks you through the capability questionnaire, and the canonical
 [forge-conformance](https://github.com/rootledev/forge-conformance)
